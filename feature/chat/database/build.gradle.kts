@@ -10,7 +10,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "empire.digiprem.com.domaine"
+        namespace = "empire.digiprem.com.database"
         compileSdk = 36
         minSdk = 24
 
@@ -31,7 +31,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "feature:auth:presentationKit"
+    val xcfName = "feature:chat:databaseKit"
 
     iosX64 {
         binaries.framework {
@@ -60,14 +60,9 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                implementation(projects.feature.auth.domain)
-                implementation(projects.core.domain)
-                implementation(projects.core.designsystem)
-
                 // Add KMP dependencies here
             }
         }
-
         androidMain {
             dependencies {
                 // Add Android-specific dependencies here. Note that this source set depends on
