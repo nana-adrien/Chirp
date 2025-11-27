@@ -53,9 +53,9 @@ coil-network="3.3.0"
 moko="0.19.1"
 buildkonfig="0.17.1"
 
-projectAplication="empire.digiprem.com.chirp"
+projectApplicationId="empire.digiprem.com.chirp"
 projectVersionName="1.0"
-projetMinSdkVersion="24"
+projectMinSdkVersion="24"
 projectTargetSdkVersion="36"
 projectCompileSdkVersion="36"
 projectVersionCode="1"
@@ -163,7 +163,18 @@ jetbrains-bundle = { module = "org.jetbrains.androidx.core:core-bundle", version
 androidx-testExt-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+
+
+
 [plugins]
+
+
+#Convention
+
+convention-android-application={id="empire.digiprem.com.android.application",version="unspecified"}
+convention-android-application-compose={id="empire.digiprem.com.android.application.compose",version="unspecified"}
+convention-cmp-application={id="empire.digiprem.com.cmp.application",version="unspecified"}
+convention-kmp-labrary={id="empire.digiprem.com.kmp.library",version="unspecified"}
 
 # Android
 android-application = { id = "com.android.application", version.ref = "agp" }
