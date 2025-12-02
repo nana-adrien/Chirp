@@ -1,4 +1,4 @@
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import empire.digiprem.com.chirp.convention.configureKotlinAndroid
 import empire.digiprem.com.chirp.convention.configureKotlinMultiplatform
 import empire.digiprem.com.chirp.convention.libs

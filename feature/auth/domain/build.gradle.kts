@@ -1,6 +1,6 @@
 plugins {
 
-    alias(libs.plugins.convention.cmp.application)
+    alias(libs.plugins.convention.kmp.labrary)
 }
 
 kotlin {

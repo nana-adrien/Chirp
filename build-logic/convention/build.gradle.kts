@@ -13,6 +13,8 @@ dependencies{
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+  implementation(libs.buildkoinfig.gradlePlugin)
+  implementation(libs.buildkoinfig.compiler)
 }
 
 java{
@@ -51,6 +53,19 @@ gradlePlugin{
         register("kmpLibrary"){
             id="empire.digiprem.com.kmp.library"
             implementationClass="KmpLibraryConventionPlugin"
+        }
+
+        register("cmpLibrary"){
+            id="empire.digiprem.com.cmp.library"
+            implementationClass="CmpLibraryConventionPlugin"
+        }
+        register("cmpFeature"){
+            id="empire.digiprem.com.cmp.feature"
+            implementationClass="CmpFeatureConventionPlugin"
+        }
+        register("buildKonfig"){
+            id="empire.digiprem.com.buildKonfig"
+            implementationClass="BuildKonfigConventionPlugin"
         }
     }
 }

@@ -1,13 +1,13 @@
 package empire.digiprem.com.chirp.convention
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureKotlinMultiplatform(){
     extensions.configure<LibraryExtension>{
-        namespace=this@configureKotlinMultiplatform.pathToFrameworkName()
+        namespace=this@configureKotlinMultiplatform.pathToPackageName()
     }
 
     configureAndroidTarget()
