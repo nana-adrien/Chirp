@@ -2,6 +2,7 @@ rootProject.name = "Chirp"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             mavenContent {
@@ -40,7 +41,7 @@ include(":core:designsystem")
 include(":feature:auth:presentation")
 include(":feature:auth:domain")
 include(":feature:auth:data")
-include(":feature:chat:domain")
 include(":feature:chat:data")
-include(":feature:chat:presentation")
 include(":feature:chat:database")
+include(":feature:chat:domain")
+include(":feature:chat:presentation")
