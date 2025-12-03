@@ -159,7 +159,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-jetbrains" }
-jetbrains-compose-material3 = { module = "jetbrains.compose.material3:material3" ,version.ref="compose-jetbrains" }
+jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3" ,version.ref="compose-jetbrains" }
 jetbrains-compose-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "material-icon" }
 jetbrains-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "material-icon" }
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-jetbrains" }
@@ -190,6 +190,7 @@ convention-kmp-labrary={id="empire.digiprem.com.kmp.library",version="unspecifie
 convention-cmp-labrary={id="empire.digiprem.com.cmp.library",version="unspecified"}
 convention-cmp-feature={id="empire.digiprem.com.cmp.feature",version="unspecified"}
 convention-buildkonfig={id="empire.digiprem.com.buildKonfig",version="unspecified"}
+convention-room={id="empire.digiprem.com.room",version="unspecified"}
 
 # Android
 android-application = { id = "com.android.application", version.ref = "agp" }
