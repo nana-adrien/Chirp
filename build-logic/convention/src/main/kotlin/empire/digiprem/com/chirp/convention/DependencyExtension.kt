@@ -12,7 +12,7 @@ fun DependencyHandlerScope.ksp(dependency: Provider<MinimalExternalModuleDepende
     kspAndroid(dependency)
     kspIosSimulatorArm64(dependency)
     kspIosArm64(dependency)
-    kspIosX64(dependency)
+  //  kspIosX64(dependency)
 }
 
 fun DependencyHandlerScope.kspAndroid(dependency: Provider<MinimalExternalModuleDependency>) {
