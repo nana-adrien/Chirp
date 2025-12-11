@@ -6,11 +6,11 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 
 sealed interface UiText {
-    data class DynamicString(val value: String): UiText
+    data class DynamicString(val value: String) : UiText
     data class Resource(
         val id: StringResource,
-        val args: Array<Any> =arrayOf()
-    ): UiText
+        val args: Array<Any> = arrayOf()
+    ) : UiText
 
     @Composable
     fun asString(): String{
