@@ -18,11 +18,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import chirp.composeapp.generated.resources.Res
 import chirp.composeapp.generated.resources.compose_multiplatform
+import empire.digiprem.com.core.designsystem.theme.ChirpTheme
+import empire.digiprem.com.core.designsystem.theme.extended
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    ChirpTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
@@ -32,7 +34,7 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+                Text("Click me!" , color = MaterialTheme.colorScheme.extended.textSecondary)
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }
