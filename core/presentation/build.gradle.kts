@@ -12,6 +12,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
 
                 implementation(projects.core.domain)
+                implementation(libs.material3.adaptive)
                 implementation(compose.components.resources)
                 // Add KMP dependencies here
             }
