@@ -73,22 +73,24 @@ val typography @Composable get()= Typography(
 
     bodyLarge = TextStyle(
         fontFamily =PlusJakartaSans ,
-        fontWeight = FontWeight.SemiBold ,
+        fontWeight = FontWeight.Normal ,
         fontSize = 18.sp,
         lineHeight = 26.sp
     ),
     bodyMedium = TextStyle(
         fontFamily =PlusJakartaSans ,
-        fontWeight = FontWeight.SemiBold ,
+        fontWeight = FontWeight.Normal ,
         fontSize = 16.sp,
         lineHeight = 24.sp
     ),
     bodySmall = TextStyle(
         fontFamily =PlusJakartaSans ,
-        fontWeight = FontWeight.SemiBold ,
+        fontWeight = FontWeight.Normal ,
         fontSize = 14.sp,
         lineHeight = 20.sp
     ),
+
+
     headlineSmall = TextStyle(
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.SemiBold,

@@ -111,7 +111,6 @@ val LightExtendedColors = ExtendedColors(
     cakeRed = ChirpCakeLightRed,
     cakeMint = ChirpCakeLightMint,
 )
-
 val DarkExtendedColors = ExtendedColors(
     primaryHover = ChirpBrand600,
     destructiveHover = ChirpRed600,
@@ -156,8 +155,6 @@ val DarkExtendedColors = ExtendedColors(
     cakeRed = ChirpCakeDarkRed,
     cakeMint = ChirpCakeDarkMint,
 )
-
-
 val LightColorScheme = lightColorScheme(
     primary = ChirpBrand500,
     onPrimary = ChirpBrand1000,
@@ -190,8 +187,6 @@ val LightColorScheme = lightColorScheme(
     outlineVariant = ChirpBase200,
 
     )
-
-
 val DarkColorScheme = darkColorScheme(
     primary = ChirpBrand500,
     onPrimary = ChirpBrand1000,
@@ -223,3 +218,4 @@ val DarkColorScheme = darkColorScheme(
     outline = ChirpBase100Alpha10,
     outlineVariant = ChirpBase800,
 )
+
