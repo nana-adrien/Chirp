@@ -21,7 +21,8 @@ import kotlinx.serialization.json.Json
 
 class HttpClientFactory(
     private val chirpLogger: ChirpLogger
-) {
+)
+{
 
     fun create(engine: HttpClientEngine): HttpClient {
         return HttpClient(engine) {
