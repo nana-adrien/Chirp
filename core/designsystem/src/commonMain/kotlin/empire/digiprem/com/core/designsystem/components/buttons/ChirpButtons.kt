@@ -1,4 +1,4 @@
-package empire.digiprem.com.core.designsystem.components
+package empire.digiprem.com.core.designsystem.components.buttons
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
