@@ -1,0 +1,113 @@
+package empire.digiprem.com.core.designsystem.layout
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import chirp.core.designsystem.generated.resources.Res
+import chirp.core.designsystem.generated.resources.logo_chirp
+import empire.digiprem.com.core.designsystem.theme.ChirpTheme
+import org.jetbrains.compose.resources.vectorResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+
+@Composable
+private fun ChirpSurface(
+    modifier: Modifier = Modifier,
+    header: @Composable () -> Unit = {},
+    content: @Composable ColumnScope.() -> Unit,
+
+    ) {
+    Surface(
+        color = MaterialTheme.colorScheme.background,
+        modifier = modifier
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            header()
+            Surface(
+                color = MaterialTheme.colorScheme.surface,
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    content = content
+                )
+            }
+
+        }
+
+    }
+}
+
+
+@Preview
+@Composable
+private fun ChirpSurfaceLightThemePreview() {
+    ChirpTheme {
+        ChirpSurface(
+            modifier = Modifier.fillMaxSize(),
+            header = {
+                Icon(
+                    imageVector = vectorResource(Res.drawable.logo_chirp),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(vertical = 32.dp)
+                )
+            }
+        ) {
+            Text(
+                text = "welcom to Chirp",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(vertical = 40.dp).align(Alignment.CenterHorizontally)
+
+            )
+
+        }
+    }
+}
+
+
+@Preview
+@Composable
+private fun ChirpSurfaceDarkThemePreview() {
+    ChirpTheme(
+        darkTheme = true
+    ) {
+        ChirpSurface(
+            modifier = Modifier.fillMaxSize(),
+            header = {
+                Icon(
+                    imageVector = vectorResource(Res.drawable.logo_chirp),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(vertical = 32.dp)
+                )
+            }
+        ) {
+            Text(
+                text = "welcom to Chirp",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(vertical = 40.dp).align(Alignment.CenterHorizontally)
+
+            )
+
+        }
+    }
+}
