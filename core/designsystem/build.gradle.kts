@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.convention.cmp.labrary)
 }
 
+compose.resources {
+    generateResClass = auto
+}
+
 kotlin {
     sourceSets {
         commonMain {

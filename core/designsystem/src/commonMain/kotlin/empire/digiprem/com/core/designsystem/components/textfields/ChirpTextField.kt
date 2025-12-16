@@ -49,74 +49,42 @@ private fun ChirpTextField(
     onFocusChange: (Boolean) -> Unit = {},
 ) {
 
-    val interactionSource=remember{
-        MutableInteractionSource()
-    }
 
-    val isFocused by interactionSource.collectIsFocusedAsState()
-
-    LaunchedEffect(isFocused){
-        onFocusChange(isFocused)
-    }
-
-    Column(
+    ChirpTextFieldLayout(
+        title = title,
+        supportingText = supportingText,
+        isError = isError,
+        onFocusChange = onFocusChange,
         modifier = modifier
-    ) {
-        if (title!=null){
-            Text(
-                text=title,
-                style= MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.extended.textSecondary
-            )
-            Spacer(Modifier.height(8.dp))
-        }
-
+    ) {styleModifier,interactionSource->
         BasicTextField(
-            state=state,
-            enabled=enabled,
-            lineLimits = if (singleLine){
+            state = state,
+            enabled = enabled,
+            modifier = styleModifier,
+            lineLimits = if (singleLine) {
                 TextFieldLineLimits.SingleLine
             } else TextFieldLineLimits.Default,
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 color = if (enabled) {
                     MaterialTheme.colorScheme.onSurface
-                }else {
+                } else {
                     MaterialTheme.colorScheme.extended.textPlaceholder
                 }
             ),
             keyboardOptions = KeyboardOptions(
-                keyboardType=keyboardType
+                keyboardType = keyboardType
             ),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
             interactionSource = interactionSource,
-
-            modifier = Modifier.fillMaxWidth().background(
-                color =when {
-                    isFocused ->MaterialTheme.colorScheme.primary.copy(
-                        alpha = 0.5f
-                    )
-                    enabled ->MaterialTheme.colorScheme.surface
-                    else ->MaterialTheme.colorScheme.extended.secondaryFill
-                },
-                shape = RoundedCornerShape(8.dp)
-            ).border(
-                width = 1.dp,
-                color = when{
-                    isError-> MaterialTheme.colorScheme.error
-                    isFocused-> MaterialTheme.colorScheme.primary
-                    else-> MaterialTheme.colorScheme.outline
-                },
-                shape = RoundedCornerShape(8.dp)
-            ).padding(12.dp),
-            decorator = {innerBox->
+            decorator = { innerBox ->
                 Box(
-                    modifier=Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.CenterStart
-                ){
-                    if (state.text.isEmpty() && placeholder !=null){
+                ) {
+                    if (state.text.isEmpty() && placeholder != null) {
                         Text(
-                            text=placeholder,
-                            color=MaterialTheme.colorScheme.extended.textPlaceholder,
+                            text = placeholder,
+                            color = MaterialTheme.colorScheme.extended.textPlaceholder,
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -125,18 +93,6 @@ private fun ChirpTextField(
             }
         )
 
-        if (supportingText!=null){
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = supportingText,
-                color = if (isError){
-                    MaterialTheme.colorScheme.error
-                }else{
-                    MaterialTheme.colorScheme.extended.textTertiary
-                },
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
     }
 
 }
@@ -170,6 +126,7 @@ private fun DisabledChirpTextFieldLightThemePreview() {
         )
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 private fun ErrorChirpTextFieldLightThemePreview() {
