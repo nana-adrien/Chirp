@@ -3,6 +3,7 @@ package empire.digiprem.com.core.designsystem.layout
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,7 +42,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
- fun ChirpAdaptativeFormLayout(
+fun ChirpAdaptativeFormLayout(
     headerText: String,
     errorText: String? = null,
     logo: @Composable () -> Unit,
@@ -78,28 +80,36 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
         }
 
         DeviceConfiguration.MOBILE_LANDSCAPE -> {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = modifier.fillMaxSize()
-                    .consumeWindowInsets(WindowInsets.displayCutout),
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+                modifier = modifier
             ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = modifier.fillMaxSize()
+                        .consumeWindowInsets(WindowInsets.displayCutout),
                 ) {
-                    Spacer(Modifier.height(32.dp))
-                    logo()
-                    Spacer(Modifier.height(32.dp))
-                    AuthHeaderSection(
-                        headerText = headerText,
-                        headerColor = headerColor,
-                        errorText = errorText
-                    )
-                }
-                ChirpSurface(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    formContent()
+                    Column(
+                        modifier = Modifier.weight(1f).padding(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(24.dp),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Spacer(Modifier.height(32.dp))
+                        logo()
+
+                        AuthHeaderSection(
+                            headerText = headerText,
+                            headerColor = headerColor,
+                            errorText = errorText
+                        )
+
+
+                    }
+                    ChirpSurface(
+                        modifier = Modifier.weight(1f).padding(10.dp)
+                    ) {
+                        formContent()
+                    }
                 }
             }
         }
@@ -117,8 +127,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
                 Column(
                     modifier = Modifier.widthIn(max = 400.dp).fillMaxWidth()
                         .clip(RoundedCornerShape(32.dp)).background(
-                        MaterialTheme.colorScheme.surface
-                    ).padding(horizontal = 24.dp, vertical = 32.dp),
+                            MaterialTheme.colorScheme.surface
+                        ).padding(horizontal = 24.dp, vertical = 32.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

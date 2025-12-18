@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
 import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
-
 @PreviewScreenSizes
 @PreviewLightDark
 @Preview(
