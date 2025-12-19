@@ -25,9 +25,7 @@ class RegisterViewModel : ViewModel() {
 
     fun onAction(event: RegisterAction) {
         when (event) {
-            else -> {
-
-            }
+            else -> { }
         }
     }
 

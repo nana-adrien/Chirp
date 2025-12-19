@@ -36,7 +36,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
-private fun ChirpTextField(
+ fun ChirpTextField(
     state: TextFieldState,
     modifier: Modifier = Modifier,
     placeholder: String? = null,
