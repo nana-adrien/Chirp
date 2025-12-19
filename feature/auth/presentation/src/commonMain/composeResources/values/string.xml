@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="welcome_to_chirp">Welcome to Chirp!</string>
-    <string name="error_account_exists">An account with that email or username already exists</string>
 
     <!--username-->
     <string name="username">Username</string>
     <string name="username_placeholder">Chirp</string>
     <string name="username_hint">Use between 3 and 20 characters for your username</string>
+    <string name="error_account_exists">An account with that email or username already exists</string>
 
     <!--email-->
     <string name="email">Email</string>
     <string name="email_placeholder">hello@chirp.com</string>
+    <string name="error_invalid_email">This is not a valid email</string>
 
 
     <!--register-->
@@ -20,4 +21,6 @@
     <!--password-->
     <string name="password">Password</string>
     <string name="password_hint">Use 9+ characters, at least one digit and one uppercase letter</string>
+    <string name="error_invalid_password">Password must be at least 9 characters and include one digit and one uppercase letter</string>
+
 </resources>
