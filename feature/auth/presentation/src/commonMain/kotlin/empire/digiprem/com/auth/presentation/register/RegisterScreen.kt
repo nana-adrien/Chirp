@@ -30,16 +30,28 @@ import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
 import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
 import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
+import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun RegisterRoot(viewModel: RegisterViewModel = viewModel()) {
+fun RegisterRoot(
+    viewModel: RegisterViewModel = viewModel(),
+    onRegisterSuccess:(String)->Unit
+
+) {
     val state by viewModel.state.collectAsState()
 
     val snackbarHostState=remember{
         SnackbarHostState()
     }
+
+    ObserveAsEvents(viewModel.event){event->
+        when(event){
+            is RegisterEvent.Success -> onRegisterSuccess(event.data)
+        }
+    }
+
     RegisterScreen(
         state = state,snackbarHostState,
         onAction = viewModel::onAction

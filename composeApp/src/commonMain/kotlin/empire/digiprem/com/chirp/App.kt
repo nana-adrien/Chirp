@@ -26,6 +26,8 @@ import empire.digiprem.com.core.designsystem.theme.extended
 @Preview
 fun App() {
     ChirpTheme {
-        RegisterRoot()
+        RegisterRoot(
+            onRegisterSuccess = {}
+        )
     }
 }
