@@ -1,5 +1,6 @@
 package empire.digiprem.com.auth.presentation.register
 
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import chirp.feature.auth.presentation.generated.resources.Res
@@ -17,6 +18,10 @@ import empire.digiprem.com.core.presentation.util.UiText
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -34,7 +39,7 @@ class RegisterViewModel(
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.onStart {
         if (!hasLoadedInitialData) {
-
+            observaVaildationStates()
             /** Load initial data here **/
             hasLoadedInitialData = true
         }
@@ -43,6 +48,29 @@ class RegisterViewModel(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = RegisterState()
     )
+
+    private val isEmailValidFlow= snapshotFlow { state.value.emailTextState.text.toString() }
+        .map { email -> EmailValidator.validate(email) }.distinctUntilChanged()
+    private val isUsernameValidFlow= snapshotFlow { state.value.usernameTextState.text.toString() }
+        .map { username -> username.length in 3..20 }.distinctUntilChanged()
+    private val isPasswordValidFlow= snapshotFlow { state.value.passwordTextState.text.toString() }
+        .map { password -> PasswordValidator.validate(password).isValidPassword }.distinctUntilChanged()
+
+    private fun observaVaildationStates(){
+        combine(
+            isEmailValidFlow,
+            isUsernameValidFlow,
+            isPasswordValidFlow
+        ){isEmailValidFlow,isUsernameValidFlow,isPasswordValidFlow->
+            val allValid=isEmailValidFlow && isUsernameValidFlow && isPasswordValidFlow
+            _state.update {
+                it.copy(
+                    canRegister =!it.isRegistering && allValid
+                )
+            }
+
+        }.launchIn(viewModelScope)
+    }
 
     fun onAction(event: RegisterAction) {
         when (event) {

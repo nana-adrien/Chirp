@@ -12,6 +12,7 @@ kotlin {
                 // Add KMP dependencies here
                 implementation(libs.bundles.ktor.common)
                 implementation(libs.touchlab.kermit)
+                implementation(libs.koin.core)
             }
         }
 
