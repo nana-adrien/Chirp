@@ -1,6 +1,7 @@
 package empire.digiprem.com.core.data.auth
 
 import empire.digiprem.com.core.data.dto.request.RegisterRequest
+import empire.digiprem.com.core.data.dto.request.ResendVerificationEmailRequest
 import empire.digiprem.com.core.data.networking.post
 import empire.digiprem.com.core.domain.auth.AuthService
 import empire.digiprem.com.core.domain.util.DataError
@@ -21,6 +22,14 @@ class KtorAuthService(
                 email=email,
                 username=username,
                 password=password
+            )
+        )
+    }
+    override suspend fun resendVerificationEmail(email: String): EmptyResult<DataError.Remote> {
+        return httpClient.post(
+            route ="/auth/resend-verification",
+            body = ResendVerificationEmailRequest(
+                email = email,
             )
         )
     }

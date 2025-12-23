@@ -17,6 +17,7 @@ import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
+import empire.digiprem.com.core.presentation.util.UiText
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
@@ -27,6 +28,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
     icon: @Composable () -> Unit,
     primaryButton: @Composable () -> Unit,
     secondaryButton: @Composable (() -> Unit)? = null,
+    secondaryError: String?=null,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -58,6 +60,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
         if (secondaryButton != null) {
             Spacer(modifier = Modifier.height(8.dp))
             secondaryButton()
+        }
+        if (secondaryError != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = secondaryError,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
 

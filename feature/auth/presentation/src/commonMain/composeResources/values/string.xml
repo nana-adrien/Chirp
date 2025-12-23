@@ -4,6 +4,7 @@
     <string name="account_successfully_created">Chirp account successfully created!</string>
     <string name="verification_email_send_to_x">We've send a verification email to %1$s</string>
     <string name="resend_verification_email">Resend verification email </string>
+    <string name="resent_verification_email">successfully verification email </string>
 
     <!--username-->
     <string name="username">Username</string>
