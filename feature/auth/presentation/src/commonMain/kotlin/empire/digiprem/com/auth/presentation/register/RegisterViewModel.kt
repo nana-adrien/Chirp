@@ -116,7 +116,7 @@ class RegisterViewModel(
                             isRegistering = false
                         )
                     }
-
+                    _eventChannel.send(RegisterEvent.Success(email))
                 }
                 .onFailure { error ->
                     _state.update {

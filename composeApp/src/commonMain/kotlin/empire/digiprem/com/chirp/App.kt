@@ -22,6 +22,7 @@ import empire.digiprem.com.auth.presentation.register.RegisterRoot
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessRoot
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessScreen
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessState
+import empire.digiprem.com.chirp.navigation.NavigationRoot
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 
@@ -29,11 +30,6 @@ import empire.digiprem.com.core.designsystem.theme.extended
 @Preview
 fun App() {
     ChirpTheme {
-        RegisterSuccessScreen(
-            state = RegisterSuccessState(registeredEmail = "kako@gmail.com"),
-            onAction = {
-
-            }
-        )
+        NavigationRoot()
     }
 }
