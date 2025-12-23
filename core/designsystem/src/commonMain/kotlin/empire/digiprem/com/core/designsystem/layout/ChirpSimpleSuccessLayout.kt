@@ -30,7 +30,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = 16.dp).padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         icon()
@@ -59,6 +59,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
             Spacer(modifier = Modifier.height(8.dp))
             secondaryButton()
         }
+        Spacer(modifier = Modifier.height(8.dp))
 
     }
 
