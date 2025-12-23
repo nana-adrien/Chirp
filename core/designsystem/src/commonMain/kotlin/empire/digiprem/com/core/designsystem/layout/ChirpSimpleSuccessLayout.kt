@@ -21,7 +21,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
-private fun ChirpSimpleSuccessLayout(
+ fun ChirpSimpleSuccessLayout(
     title: String,
     description: String,
     icon: @Composable () -> Unit,
@@ -47,7 +47,7 @@ private fun ChirpSimpleSuccessLayout(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = title,
+                text = description,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.extended.textSecondary,
                 textAlign = TextAlign.Center

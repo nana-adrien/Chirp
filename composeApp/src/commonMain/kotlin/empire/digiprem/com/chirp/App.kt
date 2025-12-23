@@ -19,6 +19,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import chirp.composeapp.generated.resources.Res
 import chirp.composeapp.generated.resources.compose_multiplatform
 import empire.digiprem.com.auth.presentation.register.RegisterRoot
+import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessRoot
+import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessScreen
+import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessState
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 
@@ -26,8 +29,11 @@ import empire.digiprem.com.core.designsystem.theme.extended
 @Preview
 fun App() {
     ChirpTheme {
-        RegisterRoot(
-            onRegisterSuccess = {}
+        RegisterSuccessScreen(
+            state = RegisterSuccessState(registeredEmail = "kako@gmail.com"),
+            onAction = {
+
+            }
         )
     }
 }

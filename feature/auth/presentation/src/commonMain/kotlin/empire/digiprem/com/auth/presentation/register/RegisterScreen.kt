@@ -39,7 +39,6 @@ import org.koin.compose.viewmodel.koinViewModel
 fun RegisterRoot(
     viewModel: RegisterViewModel = koinViewModel(),
     onRegisterSuccess:(String)->Unit
-
 ) {
     val state by viewModel.state.collectAsState()
 
