@@ -104,7 +104,7 @@ fun RegisterScreen(
             ChirpPasswordTextField(
                 state=state.passwordTextState,
                 placeholder = stringResource(Res.string.password),
-                title = stringResource(Res.string.email),
+                title = stringResource(Res.string.password),
                 supportingText = state.passwordError?.asString()?: stringResource(Res.string.password_hint),
                 isError = state.passwordError!=null,
                 onFocusChange = {isFocused->
