@@ -39,7 +39,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun EmailVerificationRoot(viewModel: EmailVerificationViewModel = viewModel()) {
+fun EmailVerificationRoot(viewModel: EmailVerificationViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsState()
 
     EmailVerificationScreen(
