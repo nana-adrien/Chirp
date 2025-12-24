@@ -1,6 +1,7 @@
 package empire.digiprem.com.core.designsystem.layout
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,15 +18,14 @@ import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
-import empire.digiprem.com.core.presentation.util.UiText
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
- fun ChirpSimpleSuccessLayout(
+ fun ChirpSimpleResultLayout(
     title: String,
     description: String,
-    icon: @Composable () -> Unit,
+    icon: @Composable ColumnScope.() -> Unit,
     primaryButton: @Composable () -> Unit,
     secondaryButton: @Composable (() -> Unit)? = null,
     secondaryError: String?=null,
@@ -81,11 +81,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 private fun ChirpSimpleSuccessLayoutLightThemePreview() {
     ChirpTheme {
-        ChirpSimpleSuccessLayout(
+        ChirpSimpleResultLayout(
             title = "Hello word",
             description = "Test description",
             icon = {
-                ChirpBrandSuccessIcon()
+                ChirpSuccessIcon()
             },
             primaryButton = {
                 ChirpButton(
@@ -117,11 +117,11 @@ private fun ChirpSimpleSuccessLayoutDarkThemePreview() {
     ChirpTheme(
         darkTheme = true
     ) {
-        ChirpSimpleSuccessLayout(
+        ChirpSimpleResultLayout(
             title = "Hello word",
             description = "Test description",
             icon = {
-                ChirpBrandSuccessIcon()
+                ChirpSuccessIcon()
             },
             primaryButton = {
                 ChirpButton(

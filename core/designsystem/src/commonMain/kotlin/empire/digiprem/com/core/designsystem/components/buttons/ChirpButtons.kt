@@ -84,8 +84,8 @@ fun ChirpButton(
     )
     val border = when {
         style == ChirpButtonStyle.PRIMARY && !enabled -> defaultBoarderStroke
-        style == ChirpButtonStyle.DESTRUCTIVE_PRIMARY ->defaultBoarderStroke
-        style == ChirpButtonStyle.SECONDARY   && !enabled -> defaultBoarderStroke
+        style == ChirpButtonStyle.SECONDARY ->defaultBoarderStroke
+        style == ChirpButtonStyle.DESTRUCTIVE_PRIMARY   && !enabled -> defaultBoarderStroke
         style == ChirpButtonStyle.DESTRUCTIVE_SECONDARY -> {
             val borderColor = if (enabled) {
                 MaterialTheme.colorScheme.extended.destructiveSecondaryOutline

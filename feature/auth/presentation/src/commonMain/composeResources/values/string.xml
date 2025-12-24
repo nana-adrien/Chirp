@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="welcome_to_chirp">Welcome to Chirp!</string>
-    <string name="account_successfully_created">Chirp account successfully created!</string>
-    <string name="verification_email_send_to_x">We've send a verification email to %1$s</string>
-    <string name="resend_verification_email">Resend verification email </string>
-    <string name="resent_verification_email">successfully verification email </string>
+    <string name="close">close</string>
 
     <!--username-->
     <string name="username">Username</string>
     <string name="username_placeholder">Chirp</string>
     <string name="username_hint">Use between 3 and 20 characters for your username</string>
     <string name="error_account_exists">An account with that email or username already exists</string>
+    <string name="account_successfully_created">Chirp account successfully created!</string>
 
     <!--email-->
     <string name="email">Email</string>
     <string name="email_placeholder">hello@chirp.com</string>
     <string name="error_invalid_email">This is not a valid email</string>
-
+    <string name="verification_email_send_to_x">We've send a verification email to %1$s</string>
+    <string name="resend_verification_email">Resend verification email </string>
+    <string name="resent_verification_email">successfully verification email </string>
+    <string name="verifying_account">Verifying account...</string>
+    <string name="email_verified_successfully">Email verified successfully!</string>
+    <string name="email_verified_failed">Failed to verify your email!</string>
+    <string name="email_verified_successfully_desc">Your email. has been verified.you can now log in with your credentials</string>
+    <string name="email_verified_failed_desc">Unable to verify your email. Maybe the link is invalid or has expired</string>
 
     <!--register-->
     <string name="register">Register</string>
