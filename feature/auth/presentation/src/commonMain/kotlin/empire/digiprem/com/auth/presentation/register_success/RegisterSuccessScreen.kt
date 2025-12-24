@@ -3,7 +3,6 @@ package empire.digiprem.com.auth.presentation.register_success
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,11 +15,9 @@ import chirp.feature.auth.presentation.generated.resources.resent_verification_e
 import chirp.feature.auth.presentation.generated.resources.verification_email_send_to_x
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
 import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeResultLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
-import empire.digiprem.com.core.designsystem.layout.ChirpBrandSuccessIcon
-import empire.digiprem.com.core.designsystem.layout.ChirpSimpleSuccessLayout
+import empire.digiprem.com.core.designsystem.layout.ChirpSuccessIcon
+import empire.digiprem.com.core.designsystem.layout.ChirpSimpleResultLayout
 import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.ObserveAsEvents
@@ -63,16 +60,15 @@ fun RegisterSuccessScreen(state: RegisterSuccessState, onAction: (RegisterSucces
     ChirpSnackBarScaffold(
         snackbarHostState=snackbarHostState
     ){
-
         ChirpAdaptativeResultLayout {
-            ChirpSimpleSuccessLayout(
+            ChirpSimpleResultLayout(
                 title = stringResource(Res.string.account_successfully_created),
                 description = stringResource(
                     Res.string.verification_email_send_to_x,
                     state.registeredEmail
                 ),
                 icon = {
-                    ChirpBrandSuccessIcon()
+                    ChirpSuccessIcon()
                 },
                 primaryButton = {
                     ChirpButton(
@@ -87,7 +83,7 @@ fun RegisterSuccessScreen(state: RegisterSuccessState, onAction: (RegisterSucces
                     ChirpButton(
                         text = stringResource(Res.string.resend_verification_email),
                         onClick = {
-                            onAction(RegisterSuccessAction.OnLoginClick)
+                            onAction(RegisterSuccessAction.OnResendVerificationEmailClick)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         enabled = !state.isRegisterVerificationEmail,

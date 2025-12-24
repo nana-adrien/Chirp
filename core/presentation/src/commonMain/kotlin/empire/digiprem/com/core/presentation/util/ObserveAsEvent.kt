@@ -21,13 +21,11 @@ fun <T> ObserveAsEvents(
     LaunchedEffect(lifecycleOwner,key1,key2){
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
             withContext(Dispatchers.Main.immediate){
-                flow.collect { onEvent }
+                flow.collect(onEvent)
             }
         }
 
     }
-
-
 }
 
 

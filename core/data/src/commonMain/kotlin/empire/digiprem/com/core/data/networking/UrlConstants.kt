@@ -1,5 +1,5 @@
 package empire.digiprem.com.core.data.networking
 
 object UrlConstants {
-    const val BASE_URL_HTTP="https://chirp.pl-coding.com/api/chat"
+    const val BASE_URL_HTTP="https://chirp.pl-coding.com/api"
 }

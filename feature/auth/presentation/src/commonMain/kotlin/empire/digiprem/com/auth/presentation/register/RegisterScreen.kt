@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -46,14 +45,15 @@ fun RegisterRoot(
         SnackbarHostState()
     }
 
-    ObserveAsEvents(viewModel.event){event->
+    ObserveAsEvents(viewModel.events){ event->
         when(event){
-            is RegisterEvent.Success -> onRegisterSuccess(event.data)
+            is RegisterEvent.Success ->onRegisterSuccess(event.data)
         }
     }
 
     RegisterScreen(
         state = state,snackbarHostState,
+        onRegisterSuccess=onRegisterSuccess,
         onAction = viewModel::onAction
     )
 }
@@ -62,7 +62,8 @@ fun RegisterRoot(
 fun RegisterScreen(
     state: RegisterState,
     snackbarHostState: SnackbarHostState,
-    onAction: (RegisterAction) -> Unit,) {
+    onRegisterSuccess:(String)->Unit={},
+    onAction: (RegisterAction) -> Unit) {
 
     ChirpSnackBarScaffold(
         snackbarHostState = snackbarHostState,
@@ -133,6 +134,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(Res.string.login),
                 onClick = {
+                    onRegisterSuccess("TotoEmail")
                     onAction(RegisterAction.OnLoginClick)
                 },
                 style= ChirpButtonStyle.SECONDARY

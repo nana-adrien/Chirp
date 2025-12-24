@@ -34,7 +34,7 @@ class RegisterViewModel(
 ) : ViewModel() {
 
     private val _eventChannel = Channel<RegisterEvent>()
-    val event = _eventChannel.receiveAsFlow()
+    val events = _eventChannel.receiveAsFlow()
     private var hasLoadedInitialData = false
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.onStart {
@@ -76,7 +76,6 @@ class RegisterViewModel(
             }
 
         }.launchIn(viewModelScope)
-        println("canRegister=${_state.value.canRegister} ")
     }
 
     fun onAction(event: RegisterAction) {
@@ -128,7 +127,6 @@ class RegisterViewModel(
                             },
                         )
                     }
-
                 }
 
         }

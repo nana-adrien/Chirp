@@ -13,6 +13,7 @@ import chirp.core.presentation.generated.resources.error_serialization
 import chirp.core.presentation.generated.resources.error_server
 import chirp.core.presentation.generated.resources.error_service_unavailable
 import chirp.core.presentation.generated.resources.error_too_many_request
+import chirp.core.presentation.generated.resources.error_unauthorized
 import chirp.core.presentation.generated.resources.error_unknown
 import empire.digiprem.com.core.domain.util.DataError
 import empire.digiprem.com.core.presentation.util.UiText
@@ -24,7 +25,7 @@ fun DataError.toUiText(): UiText {
         DataError.Local.UNKNOWN ->  Res.string.error_unknown
         DataError.Remote.BAD_REQUEST -> Res.string.error_bad_request
         DataError.Remote.REQUEST_TIMEOUT -> Res.string.error_request_timeout
-        DataError.Remote.UNAUTHORIZED ->  Res.string.error_unknown
+        DataError.Remote.UNAUTHORIZED ->  Res.string.error_unauthorized
         DataError.Remote.FORBIDDEN -> Res.string.error_forbidden
         DataError.Remote.NOT_FOUND -> Res.string.error_local_not_found
         DataError.Remote.CONFLICT -> Res.string.error_conflict
