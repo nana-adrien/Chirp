@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import chirp.feature.auth.presentation.generated.resources.Res
 import chirp.feature.auth.presentation.generated.resources.email_placeholder
@@ -96,7 +97,8 @@ fun RegisterScreen(
                 isError = state.emailError!=null,
                 onFocusChange = {isFocused->
                     onAction(RegisterAction.OnInputTextFocusGain)
-                }
+                },
+                keyboardType = KeyboardType.Email
             )
 
             Spacer(modifier= Modifier.height(16.dp))

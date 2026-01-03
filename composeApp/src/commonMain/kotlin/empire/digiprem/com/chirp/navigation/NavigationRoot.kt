@@ -2,17 +2,17 @@ package empire.digiprem.com.chirp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHost
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import empire.digiprem.com.auth.presentation.navigation.AuthGraphRoutes
 import empire.digiprem.com.auth.presentation.navigation.authGraph
 
 @Composable
 fun NavigationRoot(
-    modifier: Modifier =Modifier
+    navController: NavHostController,
+    modifier: Modifier =Modifier,
 ) {
-    val navController= rememberNavController()
 
     NavHost(
         modifier=modifier,
@@ -27,3 +27,4 @@ fun NavigationRoot(
         )
     }
 }
+

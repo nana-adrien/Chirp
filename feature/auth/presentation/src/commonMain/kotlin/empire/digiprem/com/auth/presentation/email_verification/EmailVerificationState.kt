@@ -1,6 +1,6 @@
 package empire.digiprem.com.auth.presentation.email_verification
 
 data class EmailVerificationState(
-    val isVerifying: Boolean=false,
+    val isVerifying: Boolean=true,
     val isVerified:Boolean=false
 )

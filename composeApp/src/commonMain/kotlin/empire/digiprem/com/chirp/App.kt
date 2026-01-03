@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -22,6 +23,7 @@ import empire.digiprem.com.auth.presentation.register.RegisterRoot
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessRoot
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessScreen
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessState
+import empire.digiprem.com.chirp.navigation.DeepLinkListener
 import empire.digiprem.com.chirp.navigation.NavigationRoot
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
@@ -30,6 +32,8 @@ import empire.digiprem.com.core.designsystem.theme.extended
 @Preview
 fun App() {
     ChirpTheme {
-        NavigationRoot()
+        val navController= rememberNavController()
+        DeepLinkListener(navController)
+        NavigationRoot(navController)
     }
 }
