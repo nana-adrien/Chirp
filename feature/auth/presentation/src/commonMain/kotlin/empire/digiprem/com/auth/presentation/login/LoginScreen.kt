@@ -31,6 +31,7 @@ import empire.digiprem.com.core.designsystem.components.textfields.ChirpTextFiel
 import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
 import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
+import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -38,15 +39,24 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun LoginRoot(
     viewModel: LoginViewModel = koinViewModel(),
-    onLoginSuccess:()-> Unit,
-    onForgotPasswordClick:()-> Unit,
-    onCreateAccountClick:()-> Unit) {
+    onLoginSuccess: () -> Unit,
+    onForgotPasswordClick: () -> Unit,
+    onCreateAccountClick: () -> Unit
+) {
     val state by viewModel.state.collectAsState()
+
+    ObserveAsEvents(
+        viewModel.events,
+    ) { event ->
+        when (event) {
+            LoginEvent.Success -> onLoginSuccess()
+        }
+    }
 
     LoginScreen(
         state = state,
-        onAction ={action->
-            when(action){
+        onAction = { action ->
+            when (action) {
                 LoginAction.OnForgotPasswordClick -> onForgotPasswordClick()
                 LoginAction.OnSignUpClick -> onCreateAccountClick()
                 else -> Unit
@@ -65,24 +75,24 @@ fun LoginScreen(state: LoginState, onAction: (LoginAction) -> Unit) {
         logo = {
             ChirpBrandLogo()
         },
-        modifier= Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
 
-    ) {
+        ) {
         ChirpTextField(
-            state=state.emailTextFieldState,
+            state = state.emailTextFieldState,
             placeholder = stringResource(Res.string.email_placeholder),
             keyboardType = KeyboardType.Email,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             title = stringResource(Res.string.email)
         )
-        Spacer(modifier=Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         ChirpPasswordTextField(
             title = stringResource(Res.string.password),
-            state=state.passwordTextFieldState,
+            state = state.passwordTextFieldState,
             placeholder = stringResource(Res.string.password),
             isPasswordVisible = state.isPasswordVisible,
-            onFocusChange = {isFocused->
+            onFocusChange = { isFocused ->
                 //onAction(LoginAction.OnInputTextFocusGain)
             },
             onToggleVisibilityClick = {
@@ -90,30 +100,30 @@ fun LoginScreen(state: LoginState, onAction: (LoginAction) -> Unit) {
             },
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier=Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text=stringResource(Res.string.forgot_password),
-            style= MaterialTheme.typography.titleSmall,
-            color=MaterialTheme.colorScheme.tertiary,
-            modifier=Modifier.align(Alignment.End).clickable{
+            text = stringResource(Res.string.forgot_password),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier.align(Alignment.End).clickable {
                 onAction(LoginAction.OnForgotPasswordClick)
             }
         )
 
-        Spacer(modifier=Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         ChirpButton(
-            text=stringResource(Res.string.login),
+            text = stringResource(Res.string.login),
             onClick = { onAction(LoginAction.OnLoginClick) },
             enabled = state.canLogin,
             isLoading = state.isLoggingIn,
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier=Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         ChirpButton(
-            text=stringResource(Res.string.create_account),
+            text = stringResource(Res.string.create_account),
             onClick = { onAction(LoginAction.OnSignUpClick) },
-            style= ChirpButtonStyle.SECONDARY,
+            style = ChirpButtonStyle.SECONDARY,
             modifier = Modifier.fillMaxWidth()
         )
 

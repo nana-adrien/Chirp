@@ -27,20 +27,19 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 
-
 @Composable
 fun RegisterSuccessRoot(
-    viewModel: RegisterSuccessViewModel = koinViewModel()
-
+    viewModel: RegisterSuccessViewModel = koinViewModel(),
+    onLoginClick:()->Unit
 ) {
     val state by viewModel.state.collectAsState()
-    val snackbarHostState= remember { SnackbarHostState() }
-    ObserveAsEvents(viewModel.event){event->
-        when(event){
+    val snackbarHostState = remember { SnackbarHostState() }
+    ObserveAsEvents(viewModel.event) { event ->
+        when (event) {
             RegisterSuccessEvent.ResentVerificationEmailSuccess -> {
                 snackbarHostState.showSnackbar(
                     message = getString(
-                        resource =Res.string.resent_verification_email
+                        resource = Res.string.resent_verification_email
                     )
                 )
             }
@@ -49,17 +48,27 @@ fun RegisterSuccessRoot(
 
     RegisterSuccessScreen(
         state = state,
-        onAction = viewModel::onAction,
-        snackbarHostState=snackbarHostState
+        onAction = { action ->
+            when (action) {
+                RegisterSuccessAction.OnLoginClick -> onLoginClick()
+                else ->  viewModel::onAction
+            }
+
+        },
+        snackbarHostState = snackbarHostState
     )
 }
 
 @Composable
-fun RegisterSuccessScreen(state: RegisterSuccessState, onAction: (RegisterSuccessAction) -> Unit, snackbarHostState: SnackbarHostState) {
+fun RegisterSuccessScreen(
+    state: RegisterSuccessState,
+    onAction: (RegisterSuccessAction) -> Unit,
+    snackbarHostState: SnackbarHostState
+) {
 
     ChirpSnackBarScaffold(
-        snackbarHostState=snackbarHostState
-    ){
+        snackbarHostState = snackbarHostState
+    ) {
         ChirpAdaptativeResultLayout {
             ChirpSimpleResultLayout(
                 title = stringResource(Res.string.account_successfully_created),

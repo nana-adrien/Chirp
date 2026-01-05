@@ -40,12 +40,22 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun EmailVerificationRoot(viewModel: EmailVerificationViewModel = koinViewModel()) {
+fun EmailVerificationRoot(
+    viewModel: EmailVerificationViewModel = koinViewModel(),
+    onLoginClick:()->Unit,
+    onCloseClick:()->Unit,
+    ) {
     val state by viewModel.state.collectAsState()
 
     EmailVerificationScreen(
         state = state,
-        onAction = viewModel::onAction
+        onAction = {action ->
+            when(action){
+                EmailVerificationAction.OnCloseClick -> onCloseClick()
+                EmailVerificationAction.OnLoginClick -> onLoginClick()
+            }
+            viewModel::onAction
+        }
     )
 }
 
