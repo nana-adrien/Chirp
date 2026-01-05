@@ -38,6 +38,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun RegisterRoot(
     viewModel: RegisterViewModel = koinViewModel(),
+    onLoginClick:()-> Unit,
     onRegisterSuccess:(String)->Unit
 ) {
     val state by viewModel.state.collectAsState()
@@ -54,8 +55,13 @@ fun RegisterRoot(
 
     RegisterScreen(
         state = state,snackbarHostState,
-        onRegisterSuccess=onRegisterSuccess,
-        onAction = viewModel::onAction
+        onAction ={action->
+            when(action){
+                RegisterAction.OnLoginClick -> onLoginClick()
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
     )
 }
 
@@ -63,7 +69,6 @@ fun RegisterRoot(
 fun RegisterScreen(
     state: RegisterState,
     snackbarHostState: SnackbarHostState,
-    onRegisterSuccess:(String)->Unit={},
     onAction: (RegisterAction) -> Unit) {
 
     ChirpSnackBarScaffold(
@@ -136,7 +141,6 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(Res.string.login),
                 onClick = {
-                    onRegisterSuccess("TotoEmail")
                     onAction(RegisterAction.OnLoginClick)
                 },
                 style= ChirpButtonStyle.SECONDARY

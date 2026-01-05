@@ -25,9 +25,9 @@ class LoginViewModel : ViewModel() {
 
     fun onAction(event: LoginAction) {
         when (event) {
-            else -> {
-
-            }
+            LoginAction.OnLoginClick -> TODO()
+            LoginAction.OnTogglePasswordVisibility -> TODO()
+            else -> Unit
         }
     }
 

@@ -39,7 +39,7 @@ fun ChirpAdaptativeFormLayout(
     errorText: String? = null,
     logo: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    formContent: @Composable () -> Unit,
+    formContent: @Composable  (ColumnScope.() -> Unit),
 ) {
     val configuration = currentDeviceConfigure()
     val headerColor = if (configuration == DeviceConfiguration.MOBILE_LANDSCAPE) {
