@@ -5,6 +5,6 @@ data class User(
     val email:String,
     val username:String,
     val hasVerifiedEmail:Boolean,
-    val profilePicture:String,
+    val profilePicture:String?=null,
 
     )
