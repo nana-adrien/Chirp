@@ -8,6 +8,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.coroutines.core)
+               // implementation(libs.kotlin.c)
                 // Add KMP dependencies here
             }
         }

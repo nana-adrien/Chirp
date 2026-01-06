@@ -8,6 +8,7 @@ import chirp.feature.auth.presentation.generated.resources.error_invalid_credent
 import chirp.feature.auth.presentation.generated.resources.error_invalid_email
 import empire.digiprem.com.auth.domain.EmailValidator
 import empire.digiprem.com.core.domain.auth.AuthService
+import empire.digiprem.com.core.domain.auth.SessionStorage
 import empire.digiprem.com.core.domain.util.DataError
 import empire.digiprem.com.core.domain.util.onFailure
 import empire.digiprem.com.core.domain.util.onSuccess
@@ -28,7 +29,8 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val sessionStorage: SessionStorage
 ) : ViewModel() {
     private var hasLoadedInitialData = false
 
@@ -99,6 +101,7 @@ class LoginViewModel(
 
             authService.login(email, password)
                 .onSuccess { authInfo ->
+                    sessionStorage.set(authInfo)
                     _eventChannel.send(LoginEvent.Success)
                     _state.update {
                         it.copy(
