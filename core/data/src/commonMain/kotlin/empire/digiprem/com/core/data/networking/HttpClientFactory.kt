@@ -1,10 +1,20 @@
 package empire.digiprem.com.core.data.networking
 
 import empire.digiprem.com.core.data.BuildKonfig
+import empire.digiprem.com.core.data.dto.AuthInfoSerializable
+import empire.digiprem.com.core.data.dto.request.RefreshTokenRequest
+import empire.digiprem.com.core.data.mappers.toDomain
+import empire.digiprem.com.core.domain.auth.AuthInfo
+import empire.digiprem.com.core.domain.auth.SessionStorage
 import empire.digiprem.com.core.domain.logging.ChirpLogger
+import empire.digiprem.com.core.domain.util.onFailure
+import empire.digiprem.com.core.domain.util.onSuccess
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -12,17 +22,19 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.header
+import io.ktor.client.statement.request
 import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.ContentType
 import io.ktor.http.ContentType.Application.Json
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.json.Json
 
 class HttpClientFactory(
-    private val chirpLogger: ChirpLogger
-)
-{
+    private val chirpLogger: ChirpLogger,
+    private val sessionStorage: SessionStorage
+) {
 
     fun create(engine: HttpClientEngine): HttpClient {
         return HttpClient(engine) {
@@ -33,22 +45,68 @@ class HttpClientFactory(
                     }
                 )
             }
-            install(HttpTimeout){
-                socketTimeoutMillis=20_000L
-                requestTimeoutMillis=20_000L
+            install(HttpTimeout) {
+                socketTimeoutMillis = 20_000L
+                requestTimeoutMillis = 20_000L
 
             }
-            install(Logging){
-                logger=object : Logger{
+            install(Logging) {
+                logger = object : Logger {
                     override fun log(message: String) {
                         chirpLogger.debug(message)
                     }
 
                 }
-                level= LogLevel.ALL
+                level = LogLevel.ALL
             }
-            install(WebSockets){
-                pingIntervalMillis=20_000L
+            install(WebSockets) {
+                pingIntervalMillis = 20_000L
+            }
+
+            install(Auth) {
+                bearer {
+                    loadTokens {
+                        sessionStorage
+                            .observeAuthInfo()
+                            .firstOrNull()?.let{
+                                BearerTokens(
+                                    accessToken = it.accessToken,
+                                    refreshToken = it.refreshToken
+                                )
+                            }
+                    }
+                    refreshTokens {
+                        if (response.request.url.encodedPath.contains("auth/")){
+                            return@refreshTokens null
+                        }
+
+                        val authInfo=sessionStorage.observeAuthInfo().firstOrNull()
+
+                        if (authInfo?.refreshToken.isNullOrBlank()){
+                            sessionStorage.set(null)
+                            return@refreshTokens null
+                        }
+                        var bearerTokens: BearerTokens?=null
+                        client.post<RefreshTokenRequest, AuthInfoSerializable>(
+                            route = "auth/refresh",
+                            body = RefreshTokenRequest(
+                                refreshToken = authInfo.refreshToken
+                            ),
+                            builder = {markAsRefreshTokenRequest()}
+
+                        ).onSuccess {newAuthInfo->
+                            sessionStorage.set(newAuthInfo.toDomain())
+                            bearerTokens= BearerTokens(
+                                accessToken = newAuthInfo.accessToken,
+                                refreshToken = newAuthInfo.refreshToken
+                            )
+
+                        }.onFailure { error->
+                            sessionStorage.set(null)
+                        }
+                        bearerTokens
+                    }
+                }
             }
             defaultRequest {
                 header("X-api-key", BuildKonfig.API_KEY)
