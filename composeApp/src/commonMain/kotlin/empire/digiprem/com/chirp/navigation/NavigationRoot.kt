@@ -14,13 +14,14 @@ import empire.digiprem.com.chat.presentation.chat_detail.ChatDetailRoot
 @Composable
 fun NavigationRoot(
     navController: NavHostController,
+    startDestination:Any,
     modifier: Modifier =Modifier,
 ) {
 
     NavHost(
         modifier=modifier,
         navController=navController,
-        startDestination = AuthGraphRoutes.Graph
+        startDestination = startDestination
     ){
         authGraph(
             navController=navController,

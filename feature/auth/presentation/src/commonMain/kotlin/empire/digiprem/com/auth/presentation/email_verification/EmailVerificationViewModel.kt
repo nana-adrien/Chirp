@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class EmailVerificationViewModel(
     private val authService: AuthService,
-    val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private var hasLoadedInitialData = false
     private val token = savedStateHandle.get<String>("token")

@@ -6,9 +6,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import empire.digiprem.com.auth.presentation.email_verification.EmailVerificationRoot
+import empire.digiprem.com.auth.presentation.forgot_password.ForgotPasswordRoot
 import empire.digiprem.com.auth.presentation.login.LoginRoot
 import empire.digiprem.com.auth.presentation.register.RegisterRoot
 import empire.digiprem.com.auth.presentation.register_success.RegisterSuccessRoot
+import empire.digiprem.com.auth.presentation.reset_password.ResetPasswordRoot
 
 fun NavGraphBuilder.authGraph(
     navController: NavController,
@@ -59,6 +61,21 @@ fun NavGraphBuilder.authGraph(
                     }
                 }
             )
+        }
+        composable<AuthGraphRoutes.ForgotPassword> {
+            ForgotPasswordRoot()
+        }
+        composable<AuthGraphRoutes.ResetPassword>(
+            deepLinks = listOf(
+                navDeepLink {
+                    this.uriPattern = "https://chirp.pl-coding.com/api/auth/reset-password?token={token}"
+                },
+                navDeepLink {
+                    this.uriPattern = "chirp://chirp.pl-coding.com/api/auth/reset-password?token={token}"
+                }
+            )
+        ) {
+            ResetPasswordRoot()
         }
         composable<AuthGraphRoutes.EmailVerification>(
             deepLinks = listOf(

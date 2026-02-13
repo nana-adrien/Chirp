@@ -14,7 +14,8 @@ fun initKoin(
         config?.invoke(this)
         modules(
             coreDataModule,
-            authPresentationModule
+            authPresentationModule,
+            MainModule
         )
     }
 }

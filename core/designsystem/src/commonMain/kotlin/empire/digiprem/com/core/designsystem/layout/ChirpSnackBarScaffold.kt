@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ChirpSnackBarScaffold(
-    snackbarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState?=null,
     modifier: Modifier=Modifier,
     content:@Composable ()-> Unit
 ) {
@@ -25,10 +25,12 @@ fun ChirpSnackBarScaffold(
         modifier=modifier,
         contentWindowInsets = WindowInsets.statusBars.union(WindowInsets.displayCutout).union(WindowInsets.ime),
         snackbarHost = {
-            SnackbarHost(
-            hostState = snackbarHostState,
-                modifier=Modifier.padding(bottom = 24.dp)
-            )
+            snackbarHostState?.let {
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier=Modifier.padding(bottom = 24.dp)
+                )
+            }
         }
     ) { innerPadding->
         Box(modifier.padding(innerPadding)){

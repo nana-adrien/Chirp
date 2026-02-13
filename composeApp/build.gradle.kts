@@ -12,6 +12,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.core.splashscreen)
         }
         commonMain.dependencies {
 
@@ -29,6 +30,7 @@ kotlin {
             implementation(projects.feature.chat.database)
             implementation(projects.feature.chat.presentation)
 
+            implementation(libs.bundles.koin.common)
             implementation(libs.jetbrains.compose.navigation)
             implementation(compose.runtime)
             implementation(compose.foundation)

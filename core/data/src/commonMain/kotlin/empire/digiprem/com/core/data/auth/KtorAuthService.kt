@@ -3,7 +3,8 @@ package empire.digiprem.com.core.data.auth
 import empire.digiprem.com.core.data.dto.AuthInfoSerializable
 import empire.digiprem.com.core.data.dto.request.LoginRequest
 import empire.digiprem.com.core.data.dto.request.RegisterRequest
-import empire.digiprem.com.core.data.dto.request.ResendVerificationEmailRequest
+import empire.digiprem.com.core.data.dto.request.EmailRequest
+import empire.digiprem.com.core.data.dto.request.ResetPasswordRequest
 import empire.digiprem.com.core.data.mappers.toDomain
 import empire.digiprem.com.core.data.networking.get
 import empire.digiprem.com.core.data.networking.post
@@ -51,7 +52,7 @@ class KtorAuthService(
     override suspend fun resendVerificationEmail(email: String): EmptyResult<DataError.Remote> {
         return httpClient.post(
             route = "/auth/resend-verification",
-            body = ResendVerificationEmailRequest(
+            body = EmailRequest(
                 email = email,
             )
         )
@@ -61,6 +62,25 @@ class KtorAuthService(
         return httpClient.get(
             route = "/auth/verify",
             queryParams = mapOf("token" to token)
+        )
+    }
+    override suspend fun forgotPassword(email: String): EmptyResult<DataError.Remote> {
+        return httpClient.post(
+            route = "/auth/forgot-password",
+           body = EmailRequest(email)
+        )
+    }
+
+    override suspend fun resetPassword(
+        newPassword: String,
+        token: String
+    ): EmptyResult<DataError.Remote> {
+        return httpClient.post(
+            route = "/auth/reset-password",
+            body = ResetPasswordRequest(
+                newPassword=newPassword,
+                token=token
+            )
         )
     }
 }

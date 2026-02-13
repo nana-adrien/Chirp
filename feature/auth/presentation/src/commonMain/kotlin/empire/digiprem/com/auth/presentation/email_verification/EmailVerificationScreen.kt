@@ -33,6 +33,7 @@ import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeResultLayout
 import empire.digiprem.com.core.designsystem.layout.ChirpSuccessIcon
 import empire.digiprem.com.core.designsystem.layout.ChirpFailureIcon
 import empire.digiprem.com.core.designsystem.layout.ChirpSimpleResultLayout
+import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource
@@ -64,56 +65,58 @@ fun EmailVerificationScreen(
     state: EmailVerificationState,
     onAction: (EmailVerificationAction) -> Unit
 ) {
+    ChirpSnackBarScaffold{
+        ChirpAdaptativeResultLayout {
+            when {
+                state.isVerifying -> VerifyingContent(Modifier.fillMaxSize())
 
-    ChirpAdaptativeResultLayout {
-        when {
-            state.isVerifying -> VerifyingContent(Modifier.fillMaxSize())
+                state.isVerified -> {
+                    ChirpSimpleResultLayout(
+                        title = stringResource(Res.string.email_verified_successfully),
+                        description = stringResource(Res.string.email_verified_successfully_desc),
+                        icon = {
+                            ChirpSuccessIcon()
+                        },
+                        primaryButton = {
+                            ChirpButton(
+                                text =stringResource(Res.string.login),
+                                onClick = {
+                                    onAction(EmailVerificationAction.OnLoginClick)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        },
+                    )
+                }
 
-            state.isVerified -> {
-                ChirpSimpleResultLayout(
-                    title = stringResource(Res.string.email_verified_successfully),
-                    description = stringResource(Res.string.email_verified_successfully_desc),
-                    icon = {
-                        ChirpSuccessIcon()
-                    },
-                    primaryButton = {
-                        ChirpButton(
-                            text =stringResource(Res.string.login),
-                            onClick = {
-                                onAction(EmailVerificationAction.OnLoginClick)
-                            },
-                            modifier = Modifier.fillMaxWidth()
+                else -> {
+                    ChirpSimpleResultLayout(
+                        title = stringResource(Res.string.email_verified_failed),
+                        description = stringResource(Res.string.email_verified_failed_desc),
+                        icon = {
+                            Spacer(modifier = Modifier.height(32.dp))
+                            ChirpFailureIcon(
+                                Modifier.size(80.dp)
+                            )
+                            Spacer(modifier = Modifier.height(32.dp))
+                        },
+                        primaryButton = {
+                            ChirpButton(
+                                text = stringResource(Res.string.close),
+                                onClick = {
+                                    onAction(EmailVerificationAction.OnCloseClick)
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                style = ChirpButtonStyle.SECONDARY
+                            )
+                        },
+
                         )
-                    },
-                )
-            }
-
-            else -> {
-                ChirpSimpleResultLayout(
-                    title = stringResource(Res.string.email_verified_failed),
-                    description = stringResource(Res.string.email_verified_failed_desc),
-                    icon = {
-                        Spacer(modifier = Modifier.height(32.dp))
-                        ChirpFailureIcon(
-                            Modifier.size(80.dp)
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                    },
-                    primaryButton = {
-                        ChirpButton(
-                            text = stringResource(Res.string.close),
-                            onClick = {
-                                onAction(EmailVerificationAction.OnCloseClick)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            style = ChirpButtonStyle.SECONDARY
-                        )
-                    },
-
-                )
+                }
             }
         }
     }
+
 }
 
 @Composable

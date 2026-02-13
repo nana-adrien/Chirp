@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import empire.digiprem.com.core.presentation.util.DeviceConfiguration
+import empire.digiprem.com.core.presentation.util.clearFocusOnTap
 import empire.digiprem.com.core.presentation.util.currentDeviceConfigure
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -52,6 +53,7 @@ fun ChirpAdaptativeFormLayout(
         DeviceConfiguration.MOBILE_PORTRAIT -> {
             ChirpSurface(
                 modifier = modifier
+                    .clearFocusOnTap()
                     .consumeWindowInsets(WindowInsets.navigationBars)
                     .consumeWindowInsets(WindowInsets.displayCutout),
                 header = {
