@@ -13,7 +13,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,11 +28,11 @@ import chirp.feature.auth.presentation.generated.resources.login
 import chirp.feature.auth.presentation.generated.resources.verifying_account
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeResultLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpSuccessIcon
-import empire.digiprem.com.core.designsystem.layout.ChirpFailureIcon
-import empire.digiprem.com.core.designsystem.layout.ChirpSimpleResultLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
+import empire.digiprem.com.core.designsystem.components.layout.ChirpAdaptativeResultLayout
+import empire.digiprem.com.core.designsystem.components.brand.ChirpSuccessIcon
+import empire.digiprem.com.core.designsystem.components.brand.ChirpFailureIcon
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSimpleResultLayout
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource
@@ -45,7 +44,7 @@ fun EmailVerificationRoot(
     viewModel: EmailVerificationViewModel = koinViewModel(),
     onLoginClick:()->Unit,
     onCloseClick:()->Unit,
-    ) {
+ ) {
     val state by viewModel.state.collectAsState()
 
     EmailVerificationScreen(

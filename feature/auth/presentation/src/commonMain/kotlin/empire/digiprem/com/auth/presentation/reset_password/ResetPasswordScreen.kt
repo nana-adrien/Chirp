@@ -12,8 +12,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import chirp.feature.auth.presentation.generated.resources.Res
-import chirp.feature.auth.presentation.generated.resources.error_reset_password_token_invalid
-import chirp.feature.auth.presentation.generated.resources.forgot_password_email_send_successfully
 import chirp.feature.auth.presentation.generated.resources.password
 import chirp.feature.auth.presentation.generated.resources.password_hint
 import chirp.feature.auth.presentation.generated.resources.reset_password_successfully
@@ -21,9 +19,9 @@ import chirp.feature.auth.presentation.generated.resources.set_new_password
 import chirp.feature.auth.presentation.generated.resources.submit
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.textfields.ChirpPasswordTextField
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
-import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
+import empire.digiprem.com.core.designsystem.components.layout.ChirpAdaptativeFormLayout
+import empire.digiprem.com.core.designsystem.components.brand.ChirpBrandLogo
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource

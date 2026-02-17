@@ -1,4 +1,4 @@
-package empire.digiprem.com.core.designsystem.layout
+package empire.digiprem.com.core.designsystem.components.layout
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope

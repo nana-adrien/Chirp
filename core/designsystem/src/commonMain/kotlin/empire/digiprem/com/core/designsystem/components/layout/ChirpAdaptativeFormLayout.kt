@@ -1,4 +1,4 @@
-package empire.digiprem.com.core.designsystem.layout
+package empire.digiprem.com.core.designsystem.components.layout
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import empire.digiprem.com.core.designsystem.components.brand.ChirpBrandLogo
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import empire.digiprem.com.core.presentation.util.DeviceConfiguration

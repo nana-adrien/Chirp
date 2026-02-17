@@ -15,10 +15,10 @@ import chirp.feature.auth.presentation.generated.resources.resent_verification_e
 import chirp.feature.auth.presentation.generated.resources.verification_email_send_to_x
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeResultLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpSuccessIcon
-import empire.digiprem.com.core.designsystem.layout.ChirpSimpleResultLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
+import empire.digiprem.com.core.designsystem.components.layout.ChirpAdaptativeResultLayout
+import empire.digiprem.com.core.designsystem.components.brand.ChirpSuccessIcon
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSimpleResultLayout
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import org.jetbrains.compose.resources.getString

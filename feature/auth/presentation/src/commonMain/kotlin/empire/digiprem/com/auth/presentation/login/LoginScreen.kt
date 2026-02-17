@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,14 +22,13 @@ import chirp.feature.auth.presentation.generated.resources.forgot_password
 import chirp.feature.auth.presentation.generated.resources.login
 import chirp.feature.auth.presentation.generated.resources.password
 import chirp.feature.auth.presentation.generated.resources.welcome_back
-import empire.digiprem.com.auth.presentation.register.RegisterAction
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
 import empire.digiprem.com.core.designsystem.components.textfields.ChirpPasswordTextField
 import empire.digiprem.com.core.designsystem.components.textfields.ChirpTextField
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
-import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
+import empire.digiprem.com.core.designsystem.components.layout.ChirpAdaptativeFormLayout
+import empire.digiprem.com.core.designsystem.components.brand.ChirpBrandLogo
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import org.jetbrains.compose.resources.stringResource

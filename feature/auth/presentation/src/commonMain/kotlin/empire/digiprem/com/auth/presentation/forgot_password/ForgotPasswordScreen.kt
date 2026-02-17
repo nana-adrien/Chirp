@@ -20,9 +20,9 @@ import chirp.feature.auth.presentation.generated.resources.forgot_password_email
 import chirp.feature.auth.presentation.generated.resources.submit
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.textfields.ChirpTextField
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
-import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
+import empire.digiprem.com.core.designsystem.components.layout.ChirpAdaptativeFormLayout
+import empire.digiprem.com.core.designsystem.components.brand.ChirpBrandLogo
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource

@@ -1,4 +1,4 @@
-package empire.digiprem.com.core.designsystem.layout
+package empire.digiprem.com.core.designsystem.components.layout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import empire.digiprem.com.core.designsystem.components.brand.ChirpBrandLogo
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.DeviceConfiguration
 import empire.digiprem.com.core.presentation.util.currentDeviceConfigure

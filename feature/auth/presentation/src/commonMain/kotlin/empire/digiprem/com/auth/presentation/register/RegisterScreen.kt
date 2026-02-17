@@ -26,9 +26,9 @@ import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
 import empire.digiprem.com.core.designsystem.components.textfields.ChirpPasswordTextField
 import empire.digiprem.com.core.designsystem.components.textfields.ChirpTextField
-import empire.digiprem.com.core.designsystem.layout.ChirpAdaptativeFormLayout
-import empire.digiprem.com.core.designsystem.layout.ChirpBrandLogo
-import empire.digiprem.com.core.designsystem.layout.ChirpSnackBarScaffold
+import empire.digiprem.com.core.designsystem.components.layout.ChirpAdaptativeFormLayout
+import empire.digiprem.com.core.designsystem.components.brand.ChirpBrandLogo
+import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import org.jetbrains.compose.resources.stringResource

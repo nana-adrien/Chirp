@@ -1,24 +1,23 @@
-package empire.digiprem.com.core.designsystem.layout
+package empire.digiprem.com.core.designsystem.components.brand
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import chirp.core.designsystem.generated.resources.Res
-import chirp.core.designsystem.generated.resources.success_checkmark
+import chirp.core.designsystem.generated.resources.logo_chirp
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
-import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
- fun ChirpSuccessIcon(
+ fun ChirpBrandLogo(
     modifier: Modifier= Modifier,) {
     Icon(
-        imageVector = vectorResource(Res.drawable.success_checkmark),
+        imageVector = vectorResource(Res.drawable.logo_chirp),
         contentDescription = null,
-        tint = MaterialTheme.colorScheme.extended.success,
+        tint = MaterialTheme.colorScheme.primary,
         modifier =modifier
     )
 
@@ -28,7 +27,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-private fun ChirpBrandSuccessIconLightThemePreview() {
+private fun ChirpBrandLogoLightThemePreview() {
     ChirpTheme{
        ChirpBrandLogo()
        }
@@ -37,7 +36,7 @@ private fun ChirpBrandSuccessIconLightThemePreview() {
 
 @Preview
 @Composable
-private fun ChirpBrandSuccessIconDarkThemePreview() {
+private fun ChirpBrandLogoDarkThemePreview() {
     ChirpTheme(
            darkTheme = true
        ){

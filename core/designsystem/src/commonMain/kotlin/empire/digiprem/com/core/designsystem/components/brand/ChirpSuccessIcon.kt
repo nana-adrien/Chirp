@@ -1,15 +1,10 @@
-package empire.digiprem.com.core.designsystem.layout
+package empire.digiprem.com.core.designsystem.components.brand
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import chirp.core.designsystem.generated.resources.Res
-import chirp.core.designsystem.generated.resources.logo_chirp
 import chirp.core.designsystem.generated.resources.success_checkmark
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
@@ -18,12 +13,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
- fun ChirpFailureIcon(
+ fun ChirpSuccessIcon(
     modifier: Modifier= Modifier,) {
     Icon(
-        imageVector = Icons.Default.Close,
+        imageVector = vectorResource(Res.drawable.success_checkmark),
         contentDescription = null,
-        tint = MaterialTheme.colorScheme.error,
+        tint = MaterialTheme.colorScheme.extended.success,
         modifier =modifier
     )
 
