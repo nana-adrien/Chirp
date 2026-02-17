@@ -1,0 +1,153 @@
+MVI patern (screen-action-event-viewmodel)
+     
+${NAME}Screen
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") package ${PACKAGE_NAME}  #end
+
+
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import empire.digiprem.com.core.designsystem.theme.ChirpTheme
+import ${PACKAGE_NAME}.${NAME}Action
+import ${PACKAGE_NAME}.${NAME}State
+import ${PACKAGE_NAME}.${NAME}ViewModel
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+
+@Composable
+fun ${NAME}Root(
+    viewModel:${NAME}ViewModel = koinViewModel(),
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val onAction = viewModel::onAction
+
+    ${NAME}Screen(
+        state = state,
+        onAction = onAction
+    )
+}
+
+@Composable
+fun ${NAME}Screen(
+    state: ${NAME}State,
+    onAction: (${NAME}Action) -> Unit
+) {
+
+
+}
+
+
+@Composable
+private fun ${NAME}Preview() {
+    ${NAME}Screen(
+        state = ${NAME}State(),
+        onAction = {
+
+        }
+    )
+}
+
+
+@Preview
+@Composable
+private fun ${NAME}LightThemePreview() {
+    ${PROJECT_NAME}Theme {
+        ${NAME}Preview()
+    }
+}
+
+@Preview
+@Composable
+private fun ${NAME}DarkThemePreview() {
+    ${PROJECT_NAME}Theme(
+        darkTheme = true
+    ) {
+        ${NAME}Preview()
+    }
+}
+
+
+--------- osmomvsoogfsfms-------
+
+${NAME}ViewModel
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") package ${PACKAGE_NAME}  #end
+
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ${PACKAGE_NAME}.${NAME}Action
+import ${PACKAGE_NAME}.${NAME}Event
+import ${PACKAGE_NAME}.${NAME}State
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
+
+class ${NAME}ViewModel : ViewModel() {
+    private var hasLoadedInitialData = false
+
+    private val _eventChannel = Channel<${NAME}Event>()
+    val events = _eventChannel.receiveAsFlow()
+
+    private val _state = MutableStateFlow(${NAME}State())
+
+    val state = _state.onStart {
+        if (!hasLoadedInitialData) {
+
+            hasLoadedInitialData = true
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = ${NAME}State()
+    )
+
+
+    fun onAction(action: ${NAME}Action) {
+        when (action) {
+            ${NAME}Action.OnInitAction ->{}
+            else->{}
+        }
+    }
+
+}
+
+..............pkgwmrgwrmgwomrfowr.......
+
+${NAME}State
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") package ${PACKAGE_NAME}  #end
+
+data class ${NAME}State(
+    val message:String=""
+)
+
+............. oniwjwpoejfowjeoifjwoef............ 
+
+${NAME}Event
+
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") package ${PACKAGE_NAME}  #end
+
+
+sealed interface ${NAME}Event {
+    object OnInitEvent: ${NAME}Event
+}
+
+
+
+
+............ iwhoiufhwuiehfouwiehfui  ..................
+
+${NAME}Action 
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") package ${PACKAGE_NAME}  #end
+
+sealed interface ${NAME}Action {
+    data object OnInitAction:${NAME}Action
+}
