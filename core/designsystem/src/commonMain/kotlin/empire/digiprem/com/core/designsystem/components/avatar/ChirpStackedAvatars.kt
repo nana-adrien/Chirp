@@ -45,11 +45,9 @@ fun ChirpStackedAvatars(
 
 }
 
-
 @Preview
 @Composable
 fun ChirpStackedAvatars(){
-
     ChirpTheme {
         ChirpStackedAvatars(
             maxVisible = 3,
