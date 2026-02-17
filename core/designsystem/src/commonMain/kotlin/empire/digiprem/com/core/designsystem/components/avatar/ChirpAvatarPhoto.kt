@@ -78,7 +78,7 @@ fun ChirpAvatarPhoto(
 fun ChirpAvatarPhotoPreview(){
     ChirpTheme {
         ChirpAvatarPhoto(
-            displayText = "ADmsa",
+            displayText = "AD",
 
         )
 
