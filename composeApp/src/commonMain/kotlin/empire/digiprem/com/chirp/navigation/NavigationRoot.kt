@@ -7,8 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import empire.digiprem.com.auth.presentation.navigation.AuthGraphRoutes
 import empire.digiprem.com.auth.presentation.navigation.authGraph
-import empire.digiprem.com.chat.presentation.chat_list.ChatDetail
-import empire.digiprem.com.chat.presentation.chat_list.ChatDetailRoot
 import empire.digiprem.com.chat.presentation.navigation.ChatGraphRoutes
 import empire.digiprem.com.chat.presentation.navigation.chatGraph
 

@@ -6,7 +6,6 @@ import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import empire.digiprem.com.auth.presentation.navigation.AuthGraphRoutes
-import empire.digiprem.com.chat.presentation.chat_list.ChatDetail
 import empire.digiprem.com.chat.presentation.navigation.ChatGraphRoutes
 import empire.digiprem.com.chirp.navigation.DeepLinkListener
 import empire.digiprem.com.chirp.navigation.NavigationRoot
