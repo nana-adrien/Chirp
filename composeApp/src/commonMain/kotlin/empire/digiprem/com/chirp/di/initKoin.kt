@@ -1,6 +1,7 @@
 package empire.digiprem.com.chirp.di
 
 import empire.digiprem.com.auth.presentation.di.authPresentationModule
+import empire.digiprem.com.chat.presentation.di.chatPresentationModule
 import empire.digiprem.com.core.data.di.coreDataModule
 import empire.digiprem.com.core.presentation.di.corePresentationModule
 import org.koin.core.context.startKoin
@@ -17,6 +18,7 @@ fun initKoin(
             coreDataModule,
             authPresentationModule,
             corePresentationModule,
+            chatPresentationModule,
             MainModule
         )
     }

@@ -1,4 +1,4 @@
-package empire.digiprem.com.chat.presentation.chat_detail
+package empire.digiprem.com.chat.presentation.chat_list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
