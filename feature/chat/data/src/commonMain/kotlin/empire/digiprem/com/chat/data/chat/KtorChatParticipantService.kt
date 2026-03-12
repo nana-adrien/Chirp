@@ -1,5 +1,6 @@
-package empire.digiprem.com.chat.data.dto
+package empire.digiprem.com.chat.data.chat
 
+import empire.digiprem.com.chat.data.dto.ChatParticipantDto
 import empire.digiprem.com.chat.data.mapper.toDomain
 import empire.digiprem.com.chat.domain.chat.ChatParticipantService
 import empire.digiprem.com.chat.domain.models.ChatParticipant

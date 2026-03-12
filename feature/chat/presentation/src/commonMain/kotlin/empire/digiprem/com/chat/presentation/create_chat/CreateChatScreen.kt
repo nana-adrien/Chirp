@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.cancel
 import chirp.feature.chat.presentation.generated.resources.create_chat
+import empire.digiprem.com.chat.domain.models.Chat
 import empire.digiprem.com.chat.presentation.create_chat.components.ChatMemberSearchTextSection
 import empire.digiprem.com.chat.presentation.create_chat.components.ChatParticipantsSelectionSection
 import empire.digiprem.com.chat.presentation.create_chat.components.ManageChatButtonSection
@@ -32,6 +33,7 @@ import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
 import empire.digiprem.com.core.designsystem.components.dialogs.ChirpAdaptiveDialogSheetLayout
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.DeviceConfiguration
+import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import empire.digiprem.com.core.presentation.util.clearFocusOnTap
 import empire.digiprem.com.core.presentation.util.currentDeviceConfigure
 import org.jetbrains.compose.resources.stringResource
@@ -41,10 +43,18 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun CreateChatRoot(
     onDismiss: () -> Unit,
+    onChatCreated:(Chat)->Unit,
     viewModel: CreateChatViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val onAction = viewModel::onAction
+
+    ObserveAsEvents(viewModel.events){event->
+        when(event){
+            is CreateChatEvent.OnChatCreated->onChatCreated(event.chat)
+            else->Unit
+        }
+    }
 
     ChirpAdaptiveDialogSheetLayout(
         onDismiss = {
@@ -123,12 +133,14 @@ fun CreateChatScreen(
         )
         ChirpHorizontalDivider()
         ManageChatButtonSection(
+            error = state.createChatError?.asString(),
             modifier = Modifier.fillMaxWidth(),
             primaryButton = {
                 ChirpButton(
                     text = stringResource(Res.string.create_chat),
                     onClick = { onAction(CreateChatAction.OnCreateChatClick) },
-                    isLoading = state.isCreatingChat
+                    isLoading = state.isCreatingChat,
+                    enabled = state.selectedChatParticipants.isNotEmpty()
                 )
             },
             secondaryButton = {

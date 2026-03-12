@@ -3,11 +3,11 @@ package empire.digiprem.com.chat.presentation.create_chat
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.error_participant_not_found
 import empire.digiprem.com.chat.domain.chat.ChatParticipantService
+import empire.digiprem.com.chat.domain.chat.ChatService
 import empire.digiprem.com.chat.presentation.mappers.toUi
 import empire.digiprem.com.core.domain.util.DataError
 import empire.digiprem.com.core.domain.util.onFailure
@@ -28,7 +28,8 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 class CreateChatViewModel(
-    private val chatParticipantService: ChatParticipantService
+    private val chatParticipantService: ChatParticipantService,
+    private val chatService: ChatService
 ) : ViewModel() {
     private var hasLoadedInitialData = false
     private val _eventChannel = Channel<CreateChatEvent>()
@@ -36,7 +37,7 @@ class CreateChatViewModel(
 
     private val _state = MutableStateFlow(CreateChatState())
 
-    private val searchFlow= snapshotFlow { _state.value.queryTextState.text.toString() }
+    private val searchFlow = snapshotFlow { _state.value.queryTextState.text.toString() }
         .debounce(1.seconds)
         .onEach { query ->
             performSearch(query)
@@ -57,24 +58,54 @@ class CreateChatViewModel(
     fun onAction(action: CreateChatAction) {
         when (action) {
             CreateChatAction.OnAddClick -> addParticipant()
-            CreateChatAction.OnCreateChatClick -> {
+            CreateChatAction.OnCreateChatClick -> createChat()
+            else -> Unit
+        }
+    }
 
+    private fun createChat() {
+        val userIds = state.value.selectedChatParticipants.map { it.id }
+        if (userIds.isEmpty()) {
+            return
+        }
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isCreatingChat = true,
+                    canAddParticipant = false
+                )
             }
-            CreateChatAction.OnDismissDialog -> {
+            chatService
+                .createChat(userIds)
+                .onSuccess { chat ->
+                    _state.update {
+                        it.copy(
+                            isCreatingChat = false
+                        )
+                    }
+                    _eventChannel.send(CreateChatEvent.OnChatCreated(chat))
+                }
+                .onFailure { error ->
+                    _state.update {
+                        it.copy(
+                            createChatError = error.toUiText(),
+                            canAddParticipant = it.currentSearchResult != null && !it.isSearching
 
-            }
+                        )
+                    }
+                }
         }
     }
 
     private fun addParticipant() {
-        state.value.currentSearchResult?.let {participant->
-            val isAlreadyPartOfChat=state.value.selectedChatParticipants.any{
-                it.id==participant.id
+        state.value.currentSearchResult?.let { participant ->
+            val isAlreadyPartOfChat = state.value.selectedChatParticipants.any {
+                it.id == participant.id
             }
-            if (!isAlreadyPartOfChat){
+            if (!isAlreadyPartOfChat) {
                 _state.update {
                     it.copy(
-                        selectedChatParticipants = it.selectedChatParticipants+participant,
+                        selectedChatParticipants = it.selectedChatParticipants + participant,
                         canAddParticipant = false,
                         currentSearchResult = null,
                     )
@@ -85,7 +116,7 @@ class CreateChatViewModel(
     }
 
     private fun performSearch(query: String) {
-        if (query.isBlank()){
+        if (query.isBlank()) {
             _state.update {
                 it.copy(
                     currentSearchResult = null,
@@ -104,7 +135,7 @@ class CreateChatViewModel(
             }
             chatParticipantService
                 .searchParticipant(query)
-                .onSuccess {participant->
+                .onSuccess { participant ->
                     _state.update {
                         it.copy(
                             currentSearchResult = participant.toUi(),
@@ -114,10 +145,10 @@ class CreateChatViewModel(
                         )
                     }
                 }
-                .onFailure { error->
-                    val errorMessage=when(error){
+                .onFailure { error ->
+                    val errorMessage = when (error) {
                         DataError.Remote.NOT_FOUND -> UiText.Resource(Res.string.error_participant_not_found)
-                        else-> error.toUiText()
+                        else -> error.toUiText()
                     }
                     _state.update {
                         it.copy(

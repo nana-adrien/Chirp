@@ -18,7 +18,7 @@ class ChatListDetailViewModel:ViewModel() {
                     )
                 }
             }
-            ChatListDetailAction.OnCreateClick ->{
+            ChatListDetailAction.OnCreateChatClick ->{
                 _state.update {
                     it.copy(
                         dialogState = DialogState.CreateChat

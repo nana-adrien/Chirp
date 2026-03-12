@@ -14,7 +14,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
-private fun ChirpFloatingActionButton(
+ fun ChirpFloatingActionButton(
     onClick:()->Unit,
     modifier:Modifier=Modifier,
     content:@Composable ()-> Unit

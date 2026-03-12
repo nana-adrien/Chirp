@@ -13,5 +13,6 @@ data class CreateChatState(
     val canAddParticipant:Boolean=false,
     val isCreatingChat:Boolean=false,
     val currentSearchResult:ChatParticipantUI?=null,
-    val searchError:UiText?=null
+    val searchError:UiText?=null,
+    val createChatError:UiText?=null
 )
