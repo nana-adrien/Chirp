@@ -23,28 +23,26 @@ import chirp.core.designsystem.generated.resources.users_icon
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.logout
 import chirp.feature.chat.presentation.generated.resources.profile_settings
-import chirp.core.designsystem.generated.resources.Res as DesignSystemRes
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.designsystem.components.avatar.ChirpAvatarPhoto
 import empire.digiprem.com.core.designsystem.components.brand.ChirpHorizontalDivider
-import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import chirp.core.designsystem.generated.resources.Res as DesignSystemRes
 
 @Composable
-fun ChatListHeader (
-    localParticipant: ChatParticipantUI,
-    isUserMenuOpen:Boolean=false,
-    onUserAvatarClick:()->Unit,
-    onDismissMenu:()->Unit,
-    onLogoutClick:()->Unit,
-    onProfileSettingsClick:()->Unit,
-    modifier: Modifier=Modifier
-){
+fun ChatListHeader(
+    localParticipant: ChatParticipantUI?,
+    isUserMenuOpen: Boolean = false,
+    onUserAvatarClick: () -> Unit,
+    onDismissMenu: () -> Unit,
+    onLogoutClick: () -> Unit,
+    onProfileSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     ChatHeader(
-        modifier=modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -62,10 +60,10 @@ fun ChatListHeader (
                 color = MaterialTheme.colorScheme.extended.textPrimary
             )
             Spacer(
-                modifier=Modifier.weight(1f)
+                modifier = Modifier.weight(1f)
             )
             ProfileAvatarSection(
-                localParticipant=localParticipant,
+                localParticipant = localParticipant,
                 isMenuOpen = isUserMenuOpen,
                 onClick = onUserAvatarClick,
                 onDismissMenu = onDismissMenu,
@@ -80,43 +78,46 @@ fun ChatListHeader (
 
 @Composable
 fun ProfileAvatarSection(
-    localParticipant: ChatParticipantUI,
-    isMenuOpen:Boolean,
-    onClick:()->Unit,
-    onProfileSettingsClick:()->Unit,
+    localParticipant: ChatParticipantUI?,
+    isMenuOpen: Boolean,
+    onClick: () -> Unit,
+    onProfileSettingsClick: () -> Unit,
     onDismissMenu: () -> Unit,
     onLogoutClick: () -> Unit,
-    modifier: Modifier=Modifier
-){
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier=modifier
-    ){
-        ChirpAvatarPhoto(
-            displayText = localParticipant.initials,
-            imageUrl = localParticipant.imageUrl,
-            onclick = onClick
-        )
+        modifier = modifier
+    ) {
+        if (localParticipant != null) {
+            ChirpAvatarPhoto(
+                displayText = localParticipant.initials,
+                imageUrl = localParticipant.imageUrl,
+                onclick = onClick
+            )
+        }
+
         DropdownMenu(
             expanded = isMenuOpen,
             shape = RoundedCornerShape(16.dp),
-            onDismissRequest =onDismissMenu,
+            onDismissRequest = onDismissMenu,
             containerColor = MaterialTheme.colorScheme.surface,
             border = BorderStroke(
 
-                width = 1.dp    ,
+                width = 1.dp,
                 color = MaterialTheme.colorScheme.extended.surfaceOutline
             )
-        ){
+        ) {
             DropdownMenuItem(
                 text = {
-                    Row (
+                    Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ){
-                       Icon(
-                           imageVector = vectorResource(DesignSystemRes.drawable.users_icon),
-                           contentDescription = stringResource(Res.string.profile_settings),
-                           tint = MaterialTheme.colorScheme.extended.textSecondary
-                       )
+                    ) {
+                        Icon(
+                            imageVector = vectorResource(DesignSystemRes.drawable.users_icon),
+                            contentDescription = stringResource(Res.string.profile_settings),
+                            tint = MaterialTheme.colorScheme.extended.textSecondary
+                        )
                         Text(
                             text = stringResource(Res.string.profile_settings),
                             color = MaterialTheme.colorScheme.extended.textSecondary,
@@ -124,7 +125,7 @@ fun ProfileAvatarSection(
                         )
                     }
                 },
-                onClick={
+                onClick = {
                     onDismissMenu()
                     onProfileSettingsClick()
                 }
@@ -132,9 +133,9 @@ fun ProfileAvatarSection(
             ChirpHorizontalDivider()
             DropdownMenuItem(
                 text = {
-                    Row (
+                    Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ){
+                    ) {
                         Icon(
                             imageVector = vectorResource(DesignSystemRes.drawable.log_out_icon),
                             contentDescription = stringResource(Res.string.logout),
@@ -147,7 +148,7 @@ fun ProfileAvatarSection(
                         )
                     }
                 },
-                onClick={
+                onClick = {
                     onDismissMenu()
                     onLogoutClick()
                 }
