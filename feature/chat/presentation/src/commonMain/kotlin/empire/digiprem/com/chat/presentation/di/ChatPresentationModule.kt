@@ -9,4 +9,5 @@ import org.koin.dsl.module
 val  chatPresentationModule = module {
     viewModelOf(::ChatListDetailViewModel)
     viewModelOf(::CreateChatViewModel)
+    viewModelOf(::CreateChatViewModel)
 }

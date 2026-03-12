@@ -8,7 +8,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.bundles.ktor.common)
+                implementation(libs.bundles.koin.common)
                 implementation(projects.core.domain)
+                implementation(projects.core.data)
                 implementation(projects.feature.chat.domain)
                 implementation(projects.feature.chat.database)
                 // Add KMP dependencies here

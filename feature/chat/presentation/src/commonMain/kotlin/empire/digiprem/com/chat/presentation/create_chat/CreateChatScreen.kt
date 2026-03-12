@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
@@ -41,6 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CreateChatRoot(
+    onDismiss: () -> Unit,
     viewModel: CreateChatViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -50,10 +50,15 @@ fun CreateChatRoot(
         onDismiss = {
             viewModel.onAction(CreateChatAction.OnDismissDialog)
         }
-    ){
+    ) {
         CreateChatScreen(
             state = state,
-            onAction = onAction
+            onAction = { action ->
+                when (action) {
+                    is CreateChatAction.OnDismissDialog -> onDismiss()
+                    else -> onAction(action)
+                }
+            }
         )
     }
 
@@ -64,13 +69,13 @@ fun CreateChatScreen(
     state: CreateChatState,
     onAction: (CreateChatAction) -> Unit
 ) {
-    var isTextFieldFocused by remember{ mutableStateOf(false)}
+    var isTextFieldFocused by remember { mutableStateOf(false) }
     val imeHeight = WindowInsets.ime.getBottom(LocalDensity.current)
     val isKeyboardVisible = imeHeight > 0
-    val configuration= currentDeviceConfigure()
+    val configuration = currentDeviceConfigure()
 
-    val shouldHideHeader=configuration==DeviceConfiguration.MOBILE_LANDSCAPE
-            || (isKeyboardVisible && configuration!=DeviceConfiguration.DESKTOP) || isTextFieldFocused
+    val shouldHideHeader = configuration == DeviceConfiguration.MOBILE_LANDSCAPE
+            || (isKeyboardVisible && configuration != DeviceConfiguration.DESKTOP) || isTextFieldFocused
 
     Column(
         modifier = Modifier
@@ -84,56 +89,58 @@ fun CreateChatScreen(
 
         AnimatedVisibility(
             visible = !shouldHideHeader
-        ){
+        ) {
             Column {
                 ManageChatHeaderRow(
                     title = stringResource(Res.string.create_chat),
                     onCloseClick = {
                         onAction(CreateChatAction.OnDismissDialog)
                     },
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxWidth()
                 )
                 ChirpHorizontalDivider()
-                ChatMemberSearchTextSection(
-                    queryState = state.queryTextState,
-                    onAddClick = {
-                        onAction(CreateChatAction.OnAddClick)
-                    },
-                    isSearchEnabled = state.canAddParticipant,
-                    isLoading = state.isLoadingParticipant,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    error = state.searchError,
-                    onFocusChanged = {
-                        isTextFieldFocused=it
-                    }
-                )
-                ChirpHorizontalDivider()
-                ChatParticipantsSelectionSection(
-                    selectedParticipant = state.selectedChatParticipants,
-                    modifier = Modifier.fillMaxWidth(),
-                    searchResult = state.currentSearchResult
-                )
-                ChirpHorizontalDivider()
-                ManageChatButtonSection(
-                    modifier = Modifier.fillMaxWidth(),
-                    primaryButton = {
-                        ChirpButton(
-                            text = stringResource(Res.string.create_chat),
-                            onClick = {onAction(CreateChatAction.OnCreateChatClick)},
-                            isLoading = state.isCreatingChat
-                        )
-                    },
-                    secondaryButton = {
-                        ChirpButton(
-                            text = stringResource(Res.string.cancel),
-                            onClick = {onAction(CreateChatAction.OnDismissDialog)},
-                            style = ChirpButtonStyle.SECONDARY
-                        )
-                    }
-                )
             }
         }
+        ChatMemberSearchTextSection(
+            queryState = state.queryTextState,
+            onAddClick = {
+                onAction(CreateChatAction.OnAddClick)
+            },
+            isSearchEnabled = state.canAddParticipant,
+            isLoading = state.isLoadingParticipant,
+            modifier = Modifier
+                .fillMaxWidth(),
+            error = state.searchError,
+            onFocusChanged = {
+                isTextFieldFocused = it
+            }
+        )
+        ChirpHorizontalDivider()
+        ChatParticipantsSelectionSection(
+            selectedParticipant = state.selectedChatParticipants,
+            modifier = Modifier.fillMaxWidth(),
+            searchResult = state.currentSearchResult
+        )
+        ChirpHorizontalDivider()
+        ManageChatButtonSection(
+            modifier = Modifier.fillMaxWidth(),
+            primaryButton = {
+                ChirpButton(
+                    text = stringResource(Res.string.create_chat),
+                    onClick = { onAction(CreateChatAction.OnCreateChatClick) },
+                    isLoading = state.isCreatingChat
+                )
+            },
+            secondaryButton = {
+                ChirpButton(
+                    text = stringResource(Res.string.cancel),
+                    onClick = { onAction(CreateChatAction.OnDismissDialog) },
+                    style = ChirpButtonStyle.SECONDARY
+                )
+            }
+        )
+        // }
+        // }
 
     }
 

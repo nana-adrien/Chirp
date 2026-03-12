@@ -24,6 +24,7 @@ fun ChirpBottomSheet(
         }
     }
     ModalBottomSheet(
+        sheetState = sheetState,
         onDismissRequest = onDismiss,
         dragHandle = null,
         contentWindowInsets = { WindowInsets() },
