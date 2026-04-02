@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.no_messages
 import chirp.feature.chat.presentation.generated.resources.no_messages_subtitle
-import empire.digiprem.com.chat.presentation.chat_detail.MessageListItemUi
 import empire.digiprem.com.chat.presentation.components.EmptyListSection
 import empire.digiprem.com.chat.presentation.models.MessageUi
 import org.jetbrains.compose.resources.stringResource

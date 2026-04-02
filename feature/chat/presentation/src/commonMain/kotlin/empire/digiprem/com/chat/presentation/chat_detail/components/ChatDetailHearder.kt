@@ -34,9 +34,8 @@ import chirp.core.designsystem.generated.resources.Res as DesignSystemRes
 
 @Composable
 fun ChatDetailHeader(
-    chatUi: ChatUi,
+    chatUi: ChatUi?,
     isDetailPresent: Boolean,
-    isGroupChat: Boolean,
     isChatOptionsDropDownOpen: Boolean,
     onChatOptionsClick: () -> Unit,
     onDismissChatOptions: () -> Unit,
@@ -64,16 +63,19 @@ fun ChatDetailHeader(
             }
         }
 
-        ChatItemHeaderRow(
-            chat=chatUi,
-            isGroupChat=isGroupChat,
-            modifier=Modifier.
-            weight(1f)
-                .clickable {
-                    onManageChatClick()
-                }
+        if (chatUi!=null){
+            val isGroupChat=chatUi.otherParticipants.size>1
+            ChatItemHeaderRow(
+                chat=chatUi,
+                isGroupChat=isGroupChat,
+                modifier=Modifier.
+                weight(1f)
+                    .clickable {
+                        onManageChatClick()
+                    }
 
-        )
+            )
+        }
         Box{
             ChirpIconButton(
                 onClick = onChatOptionsClick,

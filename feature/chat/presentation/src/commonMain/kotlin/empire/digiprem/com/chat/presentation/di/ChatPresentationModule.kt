@@ -1,5 +1,6 @@
 package empire.digiprem.com.chat.presentation.di
 
+import empire.digiprem.com.chat.presentation.chat_detail.ChatDetailViewModel
 import empire.digiprem.com.chat.presentation.chat_list.ChatListViewModel
 import empire.digiprem.com.chat.presentation.chat_list_detail.ChatListDetailViewModel
 import empire.digiprem.com.chat.presentation.create_chat.CreateChatViewModel
@@ -12,4 +13,5 @@ val  chatPresentationModule = module {
     viewModelOf(::CreateChatViewModel)
     viewModelOf(::CreateChatViewModel)
     viewModelOf(::ChatListViewModel)
+    viewModelOf(::ChatDetailViewModel)
 }

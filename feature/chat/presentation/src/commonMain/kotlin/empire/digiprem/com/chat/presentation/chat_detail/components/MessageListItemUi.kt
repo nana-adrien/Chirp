@@ -1,13 +1,11 @@
-package empire.digiprem.com.chat.presentation.chat_detail
+package empire.digiprem.com.chat.presentation.chat_detail.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import empire.digiprem.com.chat.presentation.chat_detail.components.DeteSeparator
-import empire.digiprem.com.chat.presentation.chat_detail.components.LocalUserMessage
-import empire.digiprem.com.chat.presentation.chat_detail.components.OtherUserMessage
 import empire.digiprem.com.chat.presentation.models.MessageUi
+import empire.digiprem.com.chat.presentation.util.getChatBubbleColorsForUser
 
 @Composable
 fun  MessageListItemUi(
@@ -35,7 +33,8 @@ fun  MessageListItemUi(
                 onRetryClick= { onRetryClick(messageUi) },
             )
             is MessageUi.OtherUserMessage -> OtherUserMessage(
-                message=messageUi
+                message=messageUi,
+                color = getChatBubbleColorsForUser(messageUi.sender.id)
             )
         }
 

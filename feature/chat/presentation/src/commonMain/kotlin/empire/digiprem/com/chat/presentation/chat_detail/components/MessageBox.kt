@@ -35,9 +35,7 @@ fun MessageBox(
     onSendClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val isConnected = connectionState == ConnectionState.CONNECTED
-
     ChirpMultilineTextField(
         state = messageTextFieldState,
         modifier = modifier

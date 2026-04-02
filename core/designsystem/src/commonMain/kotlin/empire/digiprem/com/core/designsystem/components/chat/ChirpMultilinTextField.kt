@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,7 @@ fun ChirpMultilineTextField(
     placeholder: String? = null,
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    maxHeightLines:Int=3,
     onKeyboardActions: () -> Unit={},
     bottomContent: @Composable RowScope.() -> Unit
 ) {
@@ -57,16 +59,19 @@ fun ChirpMultilineTextField(
     ) {
         BasicTextField(
             state = state,
-            modifier = Modifier.weight(1f),
             enabled = enabled,
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.extended.textPrimary
+            ),
+            lineLimits = TextFieldLineLimits.MultiLine(
+                minHeightInLines = 1,
+                maxHeightInLines = maxHeightLines
             ),
             keyboardOptions = keyboardOptions,
             onKeyboardAction = { onKeyboardActions() },
             cursorBrush = SolidColor(MaterialTheme.colorScheme.extended.textPrimary),
             decorator = { innerBox ->
-                if (placeholder != null && state.text.isNotEmpty()) {
+                if (placeholder != null && state.text.isEmpty()) {
                     Text(
                         text = placeholder,
                         color = MaterialTheme.colorScheme.extended.textPrimary,
