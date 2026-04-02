@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import chirp.core.designsystem.generated.resources.log_out_icon
 import chirp.core.designsystem.generated.resources.logo_chirp
+import chirp.core.designsystem.generated.resources.settings_icon
 import chirp.core.designsystem.generated.resources.users_icon
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.logout
@@ -26,6 +27,8 @@ import chirp.feature.chat.presentation.generated.resources.profile_settings
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.designsystem.components.avatar.ChirpAvatarPhoto
 import empire.digiprem.com.core.designsystem.components.brand.ChirpHorizontalDivider
+import empire.digiprem.com.core.designsystem.components.dropdown.ChirpDropDownMenu
+import empire.digiprem.com.core.designsystem.components.dropdown.DropDownMenuItem
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -97,63 +100,23 @@ fun ProfileAvatarSection(
             )
         }
 
-        DropdownMenu(
-            expanded = isMenuOpen,
-            shape = RoundedCornerShape(16.dp),
-            onDismissRequest = onDismissMenu,
-            containerColor = MaterialTheme.colorScheme.surface,
-            border = BorderStroke(
-
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.extended.surfaceOutline
+        ChirpDropDownMenu(
+            isOpen=isMenuOpen,
+            onDismiss = onDismissMenu,
+            items = listOf(
+                DropDownMenuItem(
+                    title = stringResource(Res.string.profile_settings),
+                    icon = vectorResource(DesignSystemRes.drawable.users_icon),
+                    contentColor = MaterialTheme.colorScheme.extended.textSecondary,
+                    onClick = onProfileSettingsClick
+                ),
+                DropDownMenuItem(
+                    title = stringResource(Res.string.logout),
+                    icon = vectorResource(DesignSystemRes.drawable.log_out_icon),
+                    contentColor = MaterialTheme.colorScheme.extended.destructiveHover,
+                    onClick = onLogoutClick
+                ),
             )
-        ) {
-            DropdownMenuItem(
-                text = {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(
-                            imageVector = vectorResource(DesignSystemRes.drawable.users_icon),
-                            contentDescription = stringResource(Res.string.profile_settings),
-                            tint = MaterialTheme.colorScheme.extended.textSecondary
-                        )
-                        Text(
-                            text = stringResource(Res.string.profile_settings),
-                            color = MaterialTheme.colorScheme.extended.textSecondary,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                },
-                onClick = {
-                    onDismissMenu()
-                    onProfileSettingsClick()
-                }
-            )
-            ChirpHorizontalDivider()
-            DropdownMenuItem(
-                text = {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(
-                            imageVector = vectorResource(DesignSystemRes.drawable.log_out_icon),
-                            contentDescription = stringResource(Res.string.logout),
-                            tint = MaterialTheme.colorScheme.extended.destructiveHover
-                        )
-                        Text(
-                            text = stringResource(Res.string.logout),
-                            color = MaterialTheme.colorScheme.extended.destructiveHover,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                },
-                onClick = {
-                    onDismissMenu()
-                    onLogoutClick()
-                }
-            )
-        }
+        )
     }
-
 }

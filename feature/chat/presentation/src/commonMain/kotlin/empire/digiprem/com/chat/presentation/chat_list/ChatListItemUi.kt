@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.SpanStyle
@@ -24,17 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import chirp.feature.chat.presentation.generated.resources.Res
-import chirp.feature.chat.presentation.generated.resources.group_chat
-import chirp.feature.chat.presentation.generated.resources.you
 import empire.digiprem.com.chat.domain.models.ChatMessage
+import empire.digiprem.com.chat.presentation.chat_list.components.ChatItemHeaderRow
 import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
-import empire.digiprem.com.core.designsystem.components.avatar.ChirpStackedAvatars
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
-import empire.digiprem.com.core.designsystem.theme.titleXSmall
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.Clock
 
@@ -62,63 +55,25 @@ fun ChatListItemUi(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
-            Row(
+            ChatItemHeaderRow(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                chat = chat,
+                isGroupChat = isGroupChat
             )
-            {
-                ChirpStackedAvatars(
-                    avatars = chat.otherParticipants,
-                )
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text(
-                        text = if (!isGroupChat) {
-                            chat.otherParticipants.first().username
-                        } else {
-                            stringResource(Res.string.group_chat)
-                        },
-                        style = MaterialTheme.typography.titleXSmall,
-                        color = MaterialTheme.colorScheme.extended.textPrimary,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    if (isGroupChat) {
-                        val you= stringResource(Res.string.you)
-                        val formattedUsernames = remember(chat.otherParticipants) {
-                            you+ chat.otherParticipants.joinToString {it.username}
-                        }
-                        Text(
-                            text = formattedUsernames,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.extended.textPlaceholder,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                }
-
-            }
-
             if (chat.lastMessage != null) {
-                val previewMessage= buildAnnotatedString {
+                val previewMessage = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
-                            fontWeight = FontWeight.Bold ,
+                            fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.extended.textSecondary
                         )
-                    ){
-                        append(chat.lastMessageSenderUsername +":")
+                    ) {
+                        append(chat.lastMessageSenderUsername + ":")
                     }
                     append(chat.lastMessage.content)
                 }
                 Text(
-                    text =previewMessage,
+                    text = previewMessage,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.extended.textSecondary,
                     overflow = TextOverflow.Ellipsis,

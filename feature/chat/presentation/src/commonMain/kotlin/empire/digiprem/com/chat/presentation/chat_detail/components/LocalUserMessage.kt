@@ -16,8 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import chirp.core.designsystem.generated.resources.log_out_icon
+import chirp.core.designsystem.generated.resources.users_icon
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.delete_for_everyone
+import chirp.feature.chat.presentation.generated.resources.logout
+import chirp.feature.chat.presentation.generated.resources.profile_settings
 import chirp.feature.chat.presentation.generated.resources.reload_icon
 import chirp.feature.chat.presentation.generated.resources.retry
 import chirp.feature.chat.presentation.generated.resources.you
@@ -25,6 +29,8 @@ import empire.digiprem.com.chat.domain.models.ChatMessageDeliveryStatus
 import empire.digiprem.com.chat.presentation.models.MessageUi
 import empire.digiprem.com.core.designsystem.components.chat.ChirpChatBubble
 import empire.digiprem.com.core.designsystem.components.chat.TrianglePosition
+import empire.digiprem.com.core.designsystem.components.dropdown.ChirpDropDownMenu
+import empire.digiprem.com.core.designsystem.components.dropdown.DropDownMenuItem
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -61,6 +67,18 @@ fun LocalUserMessage(
                 },
                 onLongClick = onMessageLongClick
 
+            )
+            ChirpDropDownMenu(
+                isOpen=message.isMenuOpen,
+                onDismiss = onDismissMessageMenu,
+                items = listOf(
+                    DropDownMenuItem(
+                        title = stringResource(Res.string.delete_for_everyone),
+                        icon = vectorResource(chirp.core.designsystem.generated.resources.Res.drawable.users_icon),
+                        contentColor = MaterialTheme.colorScheme.extended.textSecondary,
+                        onClick = onDeleteClick
+                    ),
+                )
             )
             DropdownMenu(
                 expanded = isMenuOpen,
