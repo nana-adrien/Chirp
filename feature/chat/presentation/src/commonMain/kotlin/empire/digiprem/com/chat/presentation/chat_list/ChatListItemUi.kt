@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import empire.digiprem.com.chat.domain.models.ChatMessage
-import empire.digiprem.com.chat.presentation.chat_list.components.ChatItemHeaderRow
+import empire.digiprem.com.chat.presentation.components.ChatItemHeaderRow
 import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme

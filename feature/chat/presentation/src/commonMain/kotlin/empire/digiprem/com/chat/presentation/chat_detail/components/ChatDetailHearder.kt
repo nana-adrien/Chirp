@@ -16,14 +16,13 @@ import androidx.compose.ui.unit.dp
 import chirp.core.designsystem.generated.resources.arrow_left_icon
 import chirp.core.designsystem.generated.resources.dots_icon
 import chirp.core.designsystem.generated.resources.log_out_icon
-import chirp.core.designsystem.generated.resources.users_icon
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.chat_members
 import chirp.feature.chat.presentation.generated.resources.go_back
 import chirp.feature.chat.presentation.generated.resources.leave_chat
 import chirp.feature.chat.presentation.generated.resources.open_chat_options_menu
 import chirp.feature.chat.presentation.generated.resources.users_icon
-import empire.digiprem.com.chat.presentation.chat_list.components.ChatItemHeaderRow
+import empire.digiprem.com.chat.presentation.components.ChatItemHeaderRow
 import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpIconButton
 import empire.digiprem.com.core.designsystem.components.dropdown.ChirpDropDownMenu

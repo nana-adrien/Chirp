@@ -32,8 +32,10 @@ import chirp.feature.chat.presentation.generated.resources.create_chat
 import chirp.feature.chat.presentation.generated.resources.do_you_want_to_logout
 import chirp.feature.chat.presentation.generated.resources.do_you_want_to_logout_desc
 import chirp.feature.chat.presentation.generated.resources.logout
+import chirp.feature.chat.presentation.generated.resources.no_chats
+import chirp.feature.chat.presentation.generated.resources.no_chats_subtitle
 import empire.digiprem.com.chat.presentation.chat_list.components.ChatListHeader
-import empire.digiprem.com.chat.presentation.chat_list.components.EmptyChatSection
+import empire.digiprem.com.chat.presentation.components.EmptyListSection
 import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpFloatingActionButton
 import empire.digiprem.com.core.designsystem.components.dialogs.DestructionConfirmationDialog
@@ -126,7 +128,9 @@ fun ChatListScreen(
                     CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
                 state.chats.isEmpty() -> {
-                    EmptyChatSection(
+                    EmptyListSection(
+                        title = stringResource(Res.string.no_chats),
+                        description = stringResource(Res.string.no_chats_subtitle),
                         modifier = Modifier.weight(1f).padding(horizontal = 8.dp)
                     )
                 }

@@ -4,24 +4,24 @@ import empire.digiprem.com.chat.domain.models.ChatMessageDeliveryStatus
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.presentation.util.UiText
 
-sealed interface  MessageUi {
+sealed class  MessageUi(open val id: String) {
     data class  LocalUSerMessage(
-        val id:String,
+        override val id:String,
         val content:String,
         val deliveryStatus:ChatMessageDeliveryStatus,
         val isMenuOpen:Boolean,
         val formattedSentTime:UiText
-    ):MessageUi
+    ):MessageUi(id)
 
     data class OtherUserMessage(
-        val id:String,
+        override val id:String,
         val content:String,
         val formattedSentTime:UiText,
         val sender: ChatParticipantUI
-    ):MessageUi
+    ):MessageUi(id)
 
     data class DateSeparator(
-        val id: String,
+        override val id: String,
         val date:UiText,
-    ):MessageUi
+    ):MessageUi(id)
 }

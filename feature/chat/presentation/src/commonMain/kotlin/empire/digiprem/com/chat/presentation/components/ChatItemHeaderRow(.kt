@@ -1,4 +1,4 @@
-package empire.digiprem.com.chat.presentation.chat_list.components
+package empire.digiprem.com.chat.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

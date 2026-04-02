@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Icon
@@ -23,9 +22,7 @@ import chirp.feature.chat.presentation.generated.resources.send_a_message
 import empire.digiprem.com.chat.domain.models.ConnectionState
 import empire.digiprem.com.chat.presentation.util.toUiText
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
-import empire.digiprem.com.core.designsystem.components.buttons.ChirpIconButton
 import empire.digiprem.com.core.designsystem.components.chat.ChirpMultilineTextField
-import empire.digiprem.com.core.designsystem.components.chat.ChirpMultilineTextFieldPreview
 import empire.digiprem.com.core.designsystem.theme.extended
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -39,27 +36,27 @@ fun MessageBox(
     modifier: Modifier = Modifier
 ) {
 
-    val isConnected=connectionState==ConnectionState.CONNECTED
+    val isConnected = connectionState == ConnectionState.CONNECTED
 
     ChirpMultilineTextField(
         state = messageTextFieldState,
-        modifier=modifier
+        modifier = modifier
             .padding(4.dp),
         placeholder = stringResource(Res.string.send_a_message),
         enabled = isTextInputEnabled,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
-        onKeyboardActions =onSendClick,
+        onKeyboardActions = onSendClick,
         bottomContent = {
-            Spacer(modifier=Modifier.weight(1f))
-            if(!isConnected){
+            Spacer(modifier = Modifier.weight(1f))
+            if (!isConnected) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ){
+                ) {
                     Icon(
                         imageVector = vectorResource(Res.drawable.cloud_off_icon),
                         contentDescription = connectionState.toUiText().asString(),
-                        modifier=Modifier.size(16.dp),
+                        modifier = Modifier.size(16.dp),
                         tint = MaterialTheme.colorScheme.extended.textDisabled
                     )
                     Text(

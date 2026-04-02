@@ -12,10 +12,10 @@ import empire.digiprem.com.chat.presentation.models.MessageUi
 @Composable
 fun  MessageListItemUi(
     messageUi: MessageUi,
-    onMessageLongClick:()->Unit,
+    onMessageLongClick:(MessageUi.LocalUSerMessage)->Unit,
     onDismissMessageMenu:()->Unit,
-    onRetryClick:()->Unit,
-    onDeleteClick:()->Unit,
+    onRetryClick:(MessageUi.LocalUSerMessage)->Unit,
+    onDeleteClick:(MessageUi.LocalUSerMessage)->Unit,
     modifier:Modifier=Modifier
 ) {
     Box(
@@ -29,10 +29,10 @@ fun  MessageListItemUi(
             is MessageUi.LocalUSerMessage ->LocalUserMessage(
                 isMenuOpen =messageUi. isMenuOpen,
                 message=messageUi,
-                onMessageLongClick= onMessageLongClick,
+                onMessageLongClick= { onMessageLongClick(messageUi) },
                 onDismissMessageMenu=onDismissMessageMenu,
-                onDeleteClick=onDeleteClick,
-                onRetryClick=onRetryClick,
+                onDeleteClick= { onDeleteClick(messageUi) },
+                onRetryClick= { onRetryClick(messageUi) },
             )
             is MessageUi.OtherUserMessage -> OtherUserMessage(
                 message=messageUi
