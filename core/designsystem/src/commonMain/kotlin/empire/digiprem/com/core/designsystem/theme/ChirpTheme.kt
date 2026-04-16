@@ -13,7 +13,6 @@ fun ChirpTheme(
 ) {
     val colorScheme=if (darkTheme) DarkColorScheme else LightColorScheme
     val extendedScheme=if (darkTheme) DarkExtendedColors else LightExtendedColors
-
     CompositionLocalProvider(LocalExtendedColors provides extendedScheme){
         MaterialTheme(
             colorScheme=colorScheme,
@@ -21,5 +20,4 @@ fun ChirpTheme(
             content = content
         )
     }
-
 }
