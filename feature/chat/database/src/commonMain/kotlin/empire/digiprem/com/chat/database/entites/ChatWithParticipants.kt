@@ -3,6 +3,7 @@ package empire.digiprem.com.chat.database.entites
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import empire.digiprem.com.chat.database.view.LastMessageView
 
 data class ChatWithParticipants(
     @Embedded
@@ -12,7 +13,14 @@ data class ChatWithParticipants(
         entityColumn = "userId",
         associateBy = Junction(ChatParticipantEntity::class)
     )
-    val participants: List<ChatParticipantEntity>
+    val participants: List<ChatParticipantEntity> ,
+
+    @Relation(
+        parentColumn = "chatId",
+        entityColumn = "userId",
+        entity = LastMessageView::class
+    )
+     val lastMessage: LastMessageView?
 )
 
 
