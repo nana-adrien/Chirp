@@ -72,7 +72,12 @@ interface ChatDao {
     @Transaction
     fun getActiveParticipantsByChatId(chatId: String): Flow<List<ChatParticipantEntity>>
 
-    @Query("SELECT * FROM chatentity WHERE chatId= :chatId")
+    @Query("""
+        SELECT c.*
+        FROM chatentity c
+        JOIN chatparticipantcrossref cpcr ON cpcr.chatId = c.chatId
+         WHERE c.chatId= :chatId AND cpcr.isActive =true
+         """)
     fun getChatInfoById(chatId: String): Flow<ChatInfoEntity>
 
 
