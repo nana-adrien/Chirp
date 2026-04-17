@@ -16,6 +16,8 @@ import empire.digiprem.com.core.domain.util.asEmptyResult
 import empire.digiprem.com.core.domain.util.onFailure
 import empire.digiprem.com.core.domain.util.onSuccess
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
@@ -33,8 +35,7 @@ class OfflineFirstChatRepository(
     override  fun getChatInfoById(chatId: String): Flow<ChatInfo> {
         return db.chatDao
             .getChatInfoById(chatId)
-            .firstOrNull()
-            .map{it.toDomain()}
+            .map{it.toDomain()}?: emptyFlow()
     }
 
     override suspend fun fetchChats(): Result<List<Chat>, DataError.Remote> {
@@ -72,6 +73,19 @@ class OfflineFirstChatRepository(
                     crossRefDao = db.chatParticipantsCrossRefDao
                 )
             }.asEmptyResult()
+    }
+
+    override suspend fun createChat(otherUserIds: List<String>): Result<Chat, DataError.Remote> {
+        return  chatService
+            .createChat(otherUserIds)
+            .onSuccess {chat->
+                db.chatDao.upsertChatWithParticipantsAndCrossRefs(
+                    chat = chat.toEntity(),
+                    participants = chat.participant.map { it.toEntity() },
+                    participantDao = db.chatParticipantDao,
+                    crossRefDao = db.chatParticipantsCrossRefDao
+                )
+            }
     }
 
 
