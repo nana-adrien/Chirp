@@ -11,13 +11,13 @@ data class ChatWithParticipants(
     @Relation(
         parentColumn = "chatId",
         entityColumn = "userId",
-        associateBy = Junction(ChatParticipantEntity::class)
+        associateBy = Junction(ChatParticipantCrossRef::class)
     )
     val participants: List<ChatParticipantEntity> ,
 
     @Relation(
         parentColumn = "chatId",
-        entityColumn = "userId",
+        entityColumn = "senderId",
         entity = LastMessageView::class
     )
      val lastMessage: LastMessageView?
@@ -31,7 +31,7 @@ data class ChatInfoEntity(
     @Relation(
         parentColumn = "chatId",
         entityColumn = "userId",
-        associateBy = Junction(ChatParticipantEntity::class)
+        associateBy = Junction(ChatParticipantCrossRef::class)
     )
     val participants: List<ChatParticipantEntity>,
 

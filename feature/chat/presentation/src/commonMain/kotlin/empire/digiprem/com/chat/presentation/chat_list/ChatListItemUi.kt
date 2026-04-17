@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import empire.digiprem.com.chat.domain.models.ChatMessage
+import empire.digiprem.com.chat.domain.models.ChatMessageDeliveryStatus
 import empire.digiprem.com.chat.presentation.components.ChatItemHeaderRow
 import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
@@ -125,7 +126,8 @@ fun ChatListItemUiPreview() {
                     content = "j'ai juste envie d'ecrire que tout fonctionne bien" +
                             "su plusieur ligne pour tester aussi le decoupage",
                     createAt = Clock.System.now(),
-                    senderId = "1"
+                    senderId = "1",
+                    deliveryStatus = ChatMessageDeliveryStatus.SENT
                 ),
                 lastMessageSenderUsername = "Nana Adrien"
             )

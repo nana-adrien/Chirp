@@ -253,7 +253,8 @@ private fun ChatDetailPreview( isDetailPresent: Boolean, messages: List<MessageU
                     content = "j'ai juste envie d'ecrire que tout fonctionne bien" +
                             "su plusieur ligne pour tester aussi le decoupage",
                     createAt = Clock.System.now(),
-                    senderId = "1"
+                    senderId = "1",
+                    deliveryStatus = ChatMessageDeliveryStatus.SENT
                 ),
                 lastMessageSenderUsername = "Nana Adrien"
             )

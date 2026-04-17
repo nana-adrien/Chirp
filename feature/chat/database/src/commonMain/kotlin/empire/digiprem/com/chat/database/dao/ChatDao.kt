@@ -1,13 +1,13 @@
 package empire.digiprem.com.chat.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Transaction
 
 import androidx.room.Upsert
 import empire.digiprem.com.chat.database.entites.ChatEntity
 import empire.digiprem.com.chat.database.entites.ChatInfoEntity
+import empire.digiprem.com.chat.database.entites.ChatMessageEntity
 import empire.digiprem.com.chat.database.entites.ChatParticipantCrossRef
 import empire.digiprem.com.chat.database.entites.ChatParticipantEntity
 import empire.digiprem.com.chat.database.entites.ChatWithParticipants
@@ -28,6 +28,18 @@ interface ChatDao {
     @Query("SELECT * FROM chatentity ORDER BY lastActivityAt DESC")
     @Transaction
     fun getChatsWithParticipants(): Flow<List<ChatWithParticipants>>
+
+    @Query(
+        """
+        SELECT DISTINCT c.*
+        FROM chatentity c 
+        JOIN chatparticipantcrossref cprc ON c.chatId = cprc.chatId
+        WHERE cprc.isActive=1
+        ORDER BY  lastActivityAt DESC
+    """
+    )
+    @Transaction
+    fun getChatsWithActiveParticipants(): Flow<List<ChatWithParticipants>>
 
     @Query("SELECT * FROM chatentity WHERE chatId=:id")
     suspend fun getChatById(id: String): ChatWithParticipants?
@@ -52,11 +64,12 @@ interface ChatDao {
         """
         SELECT p.*
         FROM chatparticipantentity p
-        JOIN chatparticipantcrossref cpcr ON p.userId=cpcr.userID
-        WHERE cpcr.chatId=:chatId AND cpcr.isActive=true
+        JOIN chatparticipantcrossref cpcr ON p.userId=cpcr.userId
+        WHERE cpcr.chatId =:chatId AND cpcr.isActive=true
         ORDER BY p.username
     """
     )
+    @Transaction
     fun getActiveParticipantsByChatId(chatId: String): Flow<List<ChatParticipantEntity>>
 
     @Query("SELECT * FROM chatentity WHERE chatId= :chatId")
@@ -65,15 +78,15 @@ interface ChatDao {
 
     @Transaction
     suspend fun upsertChatWithParticipantsAndCrossRefs(
-        chat:ChatEntity,
-        participants:List<ChatParticipantEntity>,
-       // crossRefs:List<ChatParticipantCrossRef>,
-        participantDao:ChatParticipantDao,
-        crossRefDao:ChatParticipantsCrossRefDao
-    ){
+        chat: ChatEntity,
+        participants: List<ChatParticipantEntity>,
+        // crossRefs:List<ChatParticipantCrossRef>,
+        participantDao: ChatParticipantDao,
+        crossRefDao: ChatParticipantsCrossRefDao
+    ) {
         upsetChat(chat)
         participantDao.upsertParticipants(participants)
-        val crossRef=participants.map { participant->
+        val crossRef = participants.map { participant ->
             ChatParticipantCrossRef(
                 chatId = chat.chatId,
                 userId = participant.userId,
@@ -81,20 +94,20 @@ interface ChatDao {
             )
         }
         crossRefDao.upsertCrossRefs(crossRef)
-        crossRefDao.syncChatParticipants(chat.chatId,participants)
+        crossRefDao.syncChatParticipants(chat.chatId, participants)
     }
 
     @Transaction
     suspend fun upsertChatsWithParticipantsAndCrossRefs(
-        chats:List<ChatWithParticipants>,
-        participantDao:ChatParticipantDao,
-        crossRefDao:ChatParticipantsCrossRefDao
-    ){
-        upsetChats(chats.map{it.chat})
-        val allParticipants=chats.flatMap { it.participants }
+        chats: List<ChatWithParticipants>,
+        participantDao: ChatParticipantDao,
+        crossRefDao: ChatParticipantsCrossRefDao
+    ) {
+        upsetChats(chats.map { it.chat })
+        val allParticipants = chats.flatMap { it.participants }
         participantDao.upsertParticipants(allParticipants)
-        val allCrossRef=chats.flatMap {chatWithParticipants->
-            chatWithParticipants.participants.map { participant->
+        val allCrossRef = chats.flatMap { chatWithParticipants ->
+            chatWithParticipants.participants.map { participant ->
                 ChatParticipantCrossRef(
                     chatId = chatWithParticipants.chat.chatId,
                     userId = participant.userId,
@@ -104,12 +117,66 @@ interface ChatDao {
         }
         crossRefDao.upsertCrossRefs(allCrossRef)
 
-        chats.forEach {chat->
+        chats.forEach { chat ->
             crossRefDao.syncChatParticipants(
-                chatId=chat.chat.chatId,
+                chatId = chat.chat.chatId,
                 participants = chat.participants
             )
         }
+
+    }
+
+    @Transaction
+    suspend fun upsertChatsWithParticipantsAndCrossRefs(
+        chats: List<ChatWithParticipants>,
+        participantDao: ChatParticipantDao,
+        crossRefDao: ChatParticipantsCrossRefDao,
+        messageDao: ChatMessageDao
+    ) {
+        upsetChats(chats.map { it.chat })
+
+        val serverChatIds = chats.map { it.chat.chatId }
+        val localChatIds = getAllChatIds()
+        val staleChatIds = localChatIds - serverChatIds
+
+
+        chats.forEach { chat ->
+            chat.lastMessage?.run {
+                messageDao.upsertMassage(
+                    ChatMessageEntity(
+                        messageId = messageId,
+                        chatId = chatId,
+                        content = content,
+                        senderId = senderId,
+                        timestamp = timestamp,
+                        deliveryStatus = deliveryStatus
+                    )
+                )
+            }
+        }
+
+        val allParticipants = chats.flatMap { it.participants }
+        participantDao.upsertParticipants(allParticipants)
+        val allCrossRef = chats.flatMap { chatWithParticipants ->
+            chatWithParticipants.participants.map { participant ->
+                ChatParticipantCrossRef(
+                    chatId = chatWithParticipants.chat.chatId,
+                    userId = participant.userId,
+                    isActive = true
+                )
+            }
+        }
+        crossRefDao.upsertCrossRefs(allCrossRef)
+
+        chats.forEach { chat ->
+            crossRefDao.syncChatParticipants(
+                chatId = chat.chat.chatId,
+                participants = chat.participants
+            )
+        }
+
+
+        deleteChatsByIds(staleChatIds)
 
     }
 
