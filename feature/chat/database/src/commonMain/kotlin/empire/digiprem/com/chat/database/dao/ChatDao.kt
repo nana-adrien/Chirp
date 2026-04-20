@@ -29,7 +29,7 @@ interface ChatDao {
     @Transaction
     fun getChatsWithParticipants(): Flow<List<ChatWithParticipants>>
 
-    @Query(
+/*    @Query(
         """
         SELECT DISTINCT c.*
         FROM chatentity c 
@@ -39,7 +39,7 @@ interface ChatDao {
     """
     )
     @Transaction
-    fun getChatsWithActiveParticipants(): Flow<List<ChatWithParticipants>>
+    fun getChatsWithParticipants(): Flow<List<ChatWithParticipants>>*/
 
     @Query("SELECT * FROM chatentity WHERE chatId=:id")
     suspend fun getChatById(id: String): ChatWithParticipants?
@@ -72,11 +72,17 @@ interface ChatDao {
     @Transaction
     fun getActiveParticipantsByChatId(chatId: String): Flow<List<ChatParticipantEntity>>
 
+            /*
     @Query("""
         SELECT c.*
         FROM chatentity c
         JOIN chatparticipantcrossref cpcr ON cpcr.chatId = c.chatId
          WHERE c.chatId= :chatId AND cpcr.isActive =true
+         """)*/
+    @Query("""
+        SELECT c.*
+        FROM chatentity c
+         WHERE c.chatId= :chatId
          """)
     fun getChatInfoById(chatId: String): Flow<ChatInfoEntity>
 

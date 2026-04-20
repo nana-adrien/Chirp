@@ -2,11 +2,15 @@
 
 package empire.digiprem.com.chat.presentation.chat_detail
 
+import androidx.compose.foundation.text.input.clearText
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import empire.digiprem.com.chat.domain.chat.ChatRepository
 import empire.digiprem.com.chat.presentation.models.toUi
 import empire.digiprem.com.core.domain.auth.SessionStorage
+import empire.digiprem.com.core.domain.util.onFailure
+import empire.digiprem.com.core.domain.util.onSuccess
+import empire.digiprem.com.core.presentation.error.toUiText
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,8 +81,59 @@ class ChatDetailViewModel(
     fun onAction(action: ChatDetailAction) {
         when (action) {
             is ChatDetailAction.OnSelectChat -> switchChat(action.chatId)
-            else -> {}
+            ChatDetailAction.OnBackClick -> {}
+            ChatDetailAction.OnChatMembersClick -> {}
+            ChatDetailAction.OnChatOptionsClick -> onChatOptionClick()
+            is ChatDetailAction.OnDeleteMessageClick ->  {}
+            ChatDetailAction.OnDismissChatOption ->onDismissChatOption()
+            ChatDetailAction.OnDismissMessageMenu -> {}
+            ChatDetailAction.OnLeaveChatClick -> onLeaveChat()
+            is ChatDetailAction.OnMessageLongClick -> {}
+            is ChatDetailAction.OnRetryClick -> {}
+            ChatDetailAction.OnScrollToTop -> {}
+            ChatDetailAction.OnSendMessageClick -> {}
         }
+    }
+
+    private fun onLeaveChat() {
+        val chatId=_chatId.value?:return
+
+        _state.update { it.copy(
+            isChatOptionsOpen = false
+        ) }
+        viewModelScope.launch {
+            chatRepository.leaveChat(chatId)
+                .onSuccess {
+                    _state.value.messageTextFieldState.clearText()
+                    _chatId.update { null }
+                    _state.update {
+                        it.copy(
+                            chatUi = null,
+                            messages = emptyList(),
+                            bannerState = BannerState()
+                        )
+                    }
+                }
+                .onFailure { error->
+                    _eventChannel.send(
+                        ChatDetailEvent.OnError(
+                            error.toUiText()
+                        )
+                    )
+                }
+        }
+    }
+
+    private fun onDismissChatOption() {
+        _state.update { it.copy(
+            isChatOptionsOpen = false
+        ) }
+    }
+
+    private fun onChatOptionClick() {
+        _state.update { it.copy(
+            isChatOptionsOpen = true
+        ) }
     }
 
     private fun switchChat(chatId: String?) {

@@ -5,10 +5,13 @@ import empire.digiprem.com.chat.data.dto.request.CreateChatRequest
 import empire.digiprem.com.chat.data.mapper.toDomain
 import empire.digiprem.com.chat.domain.chat.ChatService
 import empire.digiprem.com.chat.domain.models.Chat
+import empire.digiprem.com.core.data.networking.delete
 import empire.digiprem.com.core.data.networking.get
 import empire.digiprem.com.core.data.networking.post
 import empire.digiprem.com.core.domain.util.DataError
+import empire.digiprem.com.core.domain.util.EmptyResult
 import empire.digiprem.com.core.domain.util.Result
+import empire.digiprem.com.core.domain.util.asEmptyResult
 import empire.digiprem.com.core.domain.util.map
 import io.ktor.client.HttpClient
 
@@ -36,5 +39,11 @@ class KtorChatService(
         ).map {
             it.toDomain()
         }
+    }
+
+    override suspend fun leaveChat(chatId: String): EmptyResult<DataError.Remote> {
+        return httpClient.delete<Unit>(
+            route = "/chat/$chatId/leave",
+        ).asEmptyResult()
     }
 }
