@@ -23,6 +23,9 @@ import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.cancel
 import chirp.feature.chat.presentation.generated.resources.create_chat
 import empire.digiprem.com.chat.domain.models.Chat
+import empire.digiprem.com.chat.presentation.components.ManageChatScreen
+import empire.digiprem.com.chat.presentation.components.manage_chat.ManageChatAction
+import empire.digiprem.com.chat.presentation.components.manage_chat.ManageChatState
 import empire.digiprem.com.chat.presentation.create_chat.components.ChatMemberSearchTextSection
 import empire.digiprem.com.chat.presentation.create_chat.components.ChatParticipantsSelectionSection
 import empire.digiprem.com.chat.presentation.create_chat.components.ManageChatButtonSection
@@ -58,14 +61,16 @@ fun CreateChatRoot(
 
     ChirpAdaptiveDialogSheetLayout(
         onDismiss = {
-            viewModel.onAction(CreateChatAction.OnDismissDialog)
+            viewModel.onAction(ManageChatAction.OnDismissDialog)
         }
     ) {
-        CreateChatScreen(
+        ManageChatScreen(
+            headerText =stringResource(Res.string.create_chat) ,
+            primaryButtonText =  stringResource(Res.string.create_chat),
             state = state,
             onAction = { action ->
                 when (action) {
-                    is CreateChatAction.OnDismissDialog -> onDismiss()
+                    is ManageChatAction.OnDismissDialog -> onDismiss()
                     else -> onAction(action)
                 }
             }
@@ -73,118 +78,3 @@ fun CreateChatRoot(
     }
 
 }
-
-@Composable
-fun CreateChatScreen(
-    state: CreateChatState,
-    onAction: (CreateChatAction) -> Unit
-) {
-    var isTextFieldFocused by remember { mutableStateOf(false) }
-    val imeHeight = WindowInsets.ime.getBottom(LocalDensity.current)
-    val isKeyboardVisible = imeHeight > 0
-    val configuration = currentDeviceConfigure()
-
-    val shouldHideHeader = configuration == DeviceConfiguration.MOBILE_LANDSCAPE
-            || (isKeyboardVisible && configuration != DeviceConfiguration.DESKTOP) || isTextFieldFocused
-
-    Column(
-        modifier = Modifier
-            .clearFocusOnTap()
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .imePadding()
-            .background(MaterialTheme.colorScheme.surface)
-            .navigationBarsPadding()
-    ) {
-
-        AnimatedVisibility(
-            visible = !shouldHideHeader
-        ) {
-            Column {
-                ManageChatHeaderRow(
-                    title = stringResource(Res.string.create_chat),
-                    onCloseClick = {
-                        onAction(CreateChatAction.OnDismissDialog)
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                ChirpHorizontalDivider()
-            }
-        }
-        ChatMemberSearchTextSection(
-            queryState = state.queryTextState,
-            onAddClick = {
-                onAction(CreateChatAction.OnAddClick)
-            },
-            isSearchEnabled = state.canAddParticipant,
-            isLoading = state.isLoadingParticipant,
-            modifier = Modifier
-                .fillMaxWidth(),
-            error = state.searchError,
-            onFocusChanged = {
-                isTextFieldFocused = it
-            }
-        )
-        ChirpHorizontalDivider()
-        ChatParticipantsSelectionSection(
-            selectedParticipant = state.selectedChatParticipants,
-            modifier = Modifier.fillMaxWidth(),
-            searchResult = state.currentSearchResult
-        )
-        ChirpHorizontalDivider()
-        ManageChatButtonSection(
-            error = state.createChatError?.asString(),
-            modifier = Modifier.fillMaxWidth(),
-            primaryButton = {
-                ChirpButton(
-                    text = stringResource(Res.string.create_chat),
-                    onClick = { onAction(CreateChatAction.OnCreateChatClick) },
-                    isLoading = state.isCreatingChat,
-                    enabled = state.selectedChatParticipants.isNotEmpty()
-                )
-            },
-            secondaryButton = {
-                ChirpButton(
-                    text = stringResource(Res.string.cancel),
-                    onClick = { onAction(CreateChatAction.OnDismissDialog) },
-                    style = ChirpButtonStyle.SECONDARY
-                )
-            }
-        )
-        // }
-        // }
-
-    }
-
-}
-
-
-@Composable
-private fun CreateChatPreview() {
-    CreateChatScreen(
-        state = CreateChatState(),
-        onAction = {
-
-        }
-    )
-}
-
-
-@Preview
-@Composable
-private fun CreateChatLightThemePreview() {
-    ChirpTheme {
-        CreateChatPreview()
-    }
-}
-
-@Preview
-@Composable
-private fun CreateChatDarkThemePreview() {
-    ChirpTheme(
-        darkTheme = true
-    ) {
-        CreateChatPreview()
-    }
-}
-

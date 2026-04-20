@@ -32,7 +32,7 @@ class ChatListDetailViewModel:ViewModel() {
                     )
                 }
             }
-            ChatListDetailAction.OnManageClick -> {
+            ChatListDetailAction.OnManageChatClick -> {
                 state.value.selectedChatId?.let {selectedChatId->
                     _state.update {
                         it.copy(

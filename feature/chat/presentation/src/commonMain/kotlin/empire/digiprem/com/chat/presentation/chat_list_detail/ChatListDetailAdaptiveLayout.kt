@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
@@ -23,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import empire.digiprem.com.chat.presentation.chat_detail.ChatDetailRoot
 import empire.digiprem.com.chat.presentation.chat_list.ChatListRoot
 import empire.digiprem.com.chat.presentation.create_chat.CreateChatRoot
+import empire.digiprem.com.chat.presentation.manage_chat.ManageChatRoot
 import empire.digiprem.com.core.designsystem.theme.extended
 import empire.digiprem.com.core.presentation.util.DialogSheetScopedViewModel
 import kotlinx.coroutines.launch
@@ -93,6 +93,9 @@ fun ChatListDetailAdaptiveLayout(
                 ChatDetailRoot(
                     chatId =sharedState.selectedChatId,
                     isDetailPresent =detailPane==PaneAdaptedValue.Expanded && listPane== PaneAdaptedValue.Expanded,
+                    onChatMembersClick = {
+                        chatListDetailViewModel.onAction(ChatListDetailAction.OnManageChatClick)
+                    },
                     onBack = {
                         scope.launch {
                             if (scaffoldNavigator.canNavigateBack()){
@@ -126,6 +129,18 @@ fun ChatListDetailAdaptiveLayout(
                         ListDetailPaneScaffoldRole.Detail
                     )
                 }
+            },
+            onDismiss = {
+                chatListDetailViewModel.onAction(ChatListDetailAction.OnDismissCurrentDialogClick)
+            }
+        )
+    }
+    DialogSheetScopedViewModel(
+        visible = sharedState.dialogState is DialogState.ManageChat
+    ) {
+        ManageChatRoot (
+            onMembersAdded = {
+                chatListDetailViewModel.onAction(ChatListDetailAction.OnDismissCurrentDialogClick)
             },
             onDismiss = {
                 chatListDetailViewModel.onAction(ChatListDetailAction.OnDismissCurrentDialogClick)

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.designsystem.components.avatar.ChirpAvatarPhoto
+import empire.digiprem.com.core.designsystem.components.brand.ChirpHorizontalDivider
 import empire.digiprem.com.core.designsystem.theme.extended
 import empire.digiprem.com.core.designsystem.theme.titleXSmall
 import empire.digiprem.com.core.presentation.util.DeviceConfiguration
@@ -27,6 +28,7 @@ import empire.digiprem.com.core.presentation.util.currentDeviceConfigure
 
 @Composable
 fun ColumnScope.ChatParticipantsSelectionSection(
+    existingParticipants: List<ChatParticipantUI>,
     selectedParticipant: List<ChatParticipantUI>,
     searchResult: ChatParticipantUI? = null,
     modifier: Modifier = Modifier,
@@ -48,6 +50,20 @@ fun ColumnScope.ChatParticipantsSelectionSection(
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
+            items(
+                items = existingParticipants,
+                key = { "existing_${it.id}" }
+            ) { participant ->
+                ChatParticipantListItem(
+                    participantUi = participant,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            if (existingParticipants.isNotEmpty()){
+                item {
+                    ChirpHorizontalDivider()
+                }
+            }
             searchResult?.let {
                 item {
                     ChatParticipantListItem(

@@ -4,6 +4,7 @@ import empire.digiprem.com.chat.presentation.chat_detail.ChatDetailViewModel
 import empire.digiprem.com.chat.presentation.chat_list.ChatListViewModel
 import empire.digiprem.com.chat.presentation.chat_list_detail.ChatListDetailViewModel
 import empire.digiprem.com.chat.presentation.create_chat.CreateChatViewModel
+import empire.digiprem.com.chat.presentation.manage_chat.ManageChatViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -14,4 +15,5 @@ val  chatPresentationModule = module {
     viewModelOf(::CreateChatViewModel)
     viewModelOf(::ChatListViewModel)
     viewModelOf(::ChatDetailViewModel)
+    viewModelOf(::ManageChatViewModel)
 }

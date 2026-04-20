@@ -1,12 +1,12 @@
-package empire.digiprem.com.chat.presentation.create_chat
+package empire.digiprem.com.chat.presentation.components.manage_chat
 
 import androidx.compose.foundation.text.input.TextFieldState
-import empire.digiprem.com.chat.domain.models.ChatParticipant
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.presentation.util.UiText
 
-data class CreateChatState(
+data class ManageChatState(
     val queryTextState:TextFieldState= TextFieldState(),
+    val existingChatParticipants:List<ChatParticipantUI> = emptyList(),
     val selectedChatParticipants:List<ChatParticipantUI> = emptyList(),
     val isSearching:Boolean=false,
     val isLoadingParticipant: Boolean=false,
