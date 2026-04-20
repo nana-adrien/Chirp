@@ -60,7 +60,7 @@ class CreateChatViewModel(
     fun onAction(action: ManageChatAction) {
         when (action) {
             ManageChatAction.OnAddClick -> addParticipant()
-            ManageChatAction.OnManageChatClick -> createChat()
+            ManageChatAction.OnPrimaryActionClick -> createChat()
             else -> Unit
         }
     }
@@ -73,7 +73,7 @@ class CreateChatViewModel(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    isCreatingChat = true,
+                    isSubmitting = true,
                     canAddParticipant = false
                 )
             }
@@ -82,7 +82,7 @@ class CreateChatViewModel(
                 .onSuccess { chat ->
                     _state.update {
                         it.copy(
-                            isCreatingChat = false
+                            isSubmitting = false
                         )
                     }
                     _eventChannel.send(CreateChatEvent.OnChatCreated(chat))

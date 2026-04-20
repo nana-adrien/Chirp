@@ -17,11 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import chirp.feature.chat.presentation.generated.resources.Res
 import chirp.feature.chat.presentation.generated.resources.cancel
 import chirp.feature.chat.presentation.generated.resources.create_chat
-import empire.digiprem.com.chat.domain.models.Chat
 import empire.digiprem.com.chat.presentation.components.manage_chat.ManageChatAction
 import empire.digiprem.com.chat.presentation.components.manage_chat.ManageChatState
 import empire.digiprem.com.chat.presentation.create_chat.components.ChatMemberSearchTextSection
@@ -31,15 +29,12 @@ import empire.digiprem.com.chat.presentation.create_chat.components.ManageChatHe
 import empire.digiprem.com.core.designsystem.components.brand.ChirpHorizontalDivider
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButton
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpButtonStyle
-import empire.digiprem.com.core.designsystem.components.dialogs.ChirpAdaptiveDialogSheetLayout
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.presentation.util.DeviceConfiguration
-import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import empire.digiprem.com.core.presentation.util.clearFocusOnTap
 import empire.digiprem.com.core.presentation.util.currentDeviceConfigure
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
@@ -109,8 +104,8 @@ fun ManageChatScreen(
             primaryButton = {
                 ChirpButton(
                     text =primaryButtonText,
-                    onClick = { onAction(ManageChatAction.OnManageChatClick) },
-                    isLoading = state.isCreatingChat,
+                    onClick = { onAction(ManageChatAction.OnPrimaryActionClick) },
+                    isLoading = state.isSubmitting,
                     enabled = state.selectedChatParticipants.isNotEmpty()
                 )
             },

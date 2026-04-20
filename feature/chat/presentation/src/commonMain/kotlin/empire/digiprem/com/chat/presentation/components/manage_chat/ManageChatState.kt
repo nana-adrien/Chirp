@@ -11,7 +11,7 @@ data class ManageChatState(
     val isSearching:Boolean=false,
     val isLoadingParticipant: Boolean=false,
     val canAddParticipant:Boolean=false,
-    val isCreatingChat:Boolean=false,
+    val isSubmitting:Boolean=false,
     val currentSearchResult:ChatParticipantUI?=null,
     val searchError:UiText?=null,
     val createChatError:UiText?=null

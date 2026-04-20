@@ -2,6 +2,7 @@ package empire.digiprem.com.chat.data.chat
 
 import empire.digiprem.com.chat.data.dto.ChatDto
 import empire.digiprem.com.chat.data.dto.request.CreateChatRequest
+import empire.digiprem.com.chat.data.dto.request.ParticipantRequest
 import empire.digiprem.com.chat.data.mapper.toDomain
 import empire.digiprem.com.chat.domain.chat.ChatService
 import empire.digiprem.com.chat.domain.models.Chat
@@ -45,5 +46,17 @@ class KtorChatService(
         return httpClient.delete<Unit>(
             route = "/chat/$chatId/leave",
         ).asEmptyResult()
+    }
+
+    override suspend fun addParticipantsToChat(
+        chatId: String,
+        userIds: List<String>
+    ): Result<Chat, DataError.Remote> {
+        return  httpClient.post<ParticipantRequest, ChatDto>(
+            route = "/chat/$chatId/add",
+            body = ParticipantRequest(
+                userIds=userIds
+            )
+        ).map { it.toDomain() }
     }
 }

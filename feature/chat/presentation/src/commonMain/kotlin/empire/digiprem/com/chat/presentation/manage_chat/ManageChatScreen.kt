@@ -1,6 +1,7 @@
 package empire.digiprem.com.chat.presentation.manage_chat
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,12 +19,16 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ManageChatRoot(
+    chatId:String?,
     viewModel: ManageChatViewModel= koinViewModel(),
     onMembersAdded:()->Unit,
     onDismiss:()->Unit,
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(chatId){
+        viewModel.onAction(ManageChatAction.ChatParticipants.OnSelectChat(chatId))
+    }
     ObserveAsEvents(viewModel.events){event->
         when(event){
             is ManageChatEvent.OnMembersAdded->onMembersAdded()

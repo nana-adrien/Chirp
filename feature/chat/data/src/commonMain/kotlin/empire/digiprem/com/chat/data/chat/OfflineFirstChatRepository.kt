@@ -11,6 +11,7 @@ import empire.digiprem.com.chat.domain.chat.ChatRepository
 import empire.digiprem.com.chat.domain.chat.ChatService
 import empire.digiprem.com.chat.domain.models.Chat
 import empire.digiprem.com.chat.domain.models.ChatInfo
+import empire.digiprem.com.chat.domain.models.ChatParticipant
 import empire.digiprem.com.core.domain.util.DataError
 import empire.digiprem.com.core.domain.util.EmptyResult
 import empire.digiprem.com.core.domain.util.Result
@@ -61,6 +62,13 @@ class OfflineFirstChatRepository(
                 )
             }
             .map { it.toDomain() }
+    }
+
+    override fun getActiveParticipantsByChatId(chatId: String): Flow<List<ChatParticipant>> {
+        return db.chatDao.getActiveParticipantsByChatId(chatId)
+            .map { participants ->
+                participants.map { it.toDomain() }
+            }
     }
 
     override suspend fun fetchChats(): Result<List<Chat>, DataError.Remote> {
@@ -118,6 +126,25 @@ class OfflineFirstChatRepository(
             .onSuccess {
                 db.chatDao.deleteChatById(chatId)
             }
+    }
+
+    override suspend fun addParticipantsToChat(
+        chatId: String,
+        userIds: List<String>
+    ): Result<Chat, DataError.Remote> {
+        return chatService
+            .addParticipantsToChat(
+                chatId = chatId,
+                userIds = userIds
+            ).onSuccess { chat ->
+                db.chatDao.upsertChatWithParticipantsAndCrossRefs(
+                    chat = chat.toEntity(),
+                    participants = chat.participant.map { it.toEntity() },
+                    participantDao = db.chatParticipantDao,
+                    crossRefDao = db.chatParticipantsCrossRefDao
+                )
+            }
+
     }
 
 
