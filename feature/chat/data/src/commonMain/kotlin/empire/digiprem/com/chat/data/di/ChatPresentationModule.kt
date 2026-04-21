@@ -4,6 +4,7 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import empire.digiprem.com.chat.data.chat.KtorChatParticipantService
 import empire.digiprem.com.chat.data.chat.KtorChatService
 import empire.digiprem.com.chat.data.chat.OfflineFirstChatRepository
+import empire.digiprem.com.chat.data.lifecycle.AppLifecycleObserver
 import empire.digiprem.com.chat.database.DatabaseFactory
 import empire.digiprem.com.chat.domain.chat.ChatParticipantService
 import empire.digiprem.com.chat.domain.chat.ChatRepository
