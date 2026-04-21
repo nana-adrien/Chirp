@@ -3,6 +3,7 @@ package empire.digiprem.com.chat.data.lifecycle
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import platform.Foundation.NSOperationQueue
 import platform.UIKit.UIApplicationDidBecomeActiveNotification
 import platform.UIKit.UIApplicationDidEnterBackgroundNotification
 import platform.UIKit.UIApplicationState
@@ -34,7 +35,7 @@ actual class AppLifecycleObserver {
         val willEnterForegroundObserver=notificationCenter.addObserverFromName(
             name= UIApplicationWillEnterForegroundNotification,
             `object`=null,
-            queue=NSOperationQueue.mainQueue
+            queue= NSOperationQueue.mainQueue
         ){
             trySend(true)
         }
