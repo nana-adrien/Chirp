@@ -20,7 +20,7 @@ import empire.digiprem.com.core.presentation.util.currentDeviceConfigure
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun EmptyListSection(
+fun EmptySection(
     title:String,
     description:String,
     modifier: Modifier = Modifier

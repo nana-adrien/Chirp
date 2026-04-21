@@ -32,22 +32,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import chirp.feature.chat.presentation.generated.resources.Res
+import chirp.feature.chat.presentation.generated.resources.no_chat_selected
+import chirp.feature.chat.presentation.generated.resources.select_a_chat
 import empire.digiprem.com.chat.domain.models.ChatMessage
 import empire.digiprem.com.chat.domain.models.ChatMessageDeliveryStatus
 import empire.digiprem.com.chat.presentation.chat_detail.components.ChatDetailHeader
 import empire.digiprem.com.chat.presentation.chat_detail.components.MessageBox
 import empire.digiprem.com.chat.presentation.chat_detail.components.MessageList
 import empire.digiprem.com.chat.presentation.components.ChatHeader
+import empire.digiprem.com.chat.presentation.components.EmptySection
 import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.chat.presentation.models.MessageUi
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
-import empire.digiprem.com.core.designsystem.components.layout.ChirpSnackBarScaffold
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
 import empire.digiprem.com.core.designsystem.theme.extended
 import empire.digiprem.com.core.presentation.util.ObserveAsEvents
 import empire.digiprem.com.core.presentation.util.UiText
 import empire.digiprem.com.core.presentation.util.clearFocusOnTap
 import empire.digiprem.com.core.presentation.util.currentDeviceConfigure
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.random.Random
@@ -61,7 +65,7 @@ fun ChatDetailRoot(
     chatId: String?,
     isDetailPresent: Boolean,
     onBack: () -> Unit,
-    onChatMembersClick:()->Unit,
+    onChatMembersClick: () -> Unit,
     viewModel: ChatDetailViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -93,10 +97,10 @@ fun ChatDetailRoot(
         state = state,
         isDetailPresent = isDetailPresent,
         snackbarState = snackbarState,
-        onAction ={ action->
-            when(action){
-                is ChatDetailAction.OnChatMembersClick->onChatMembersClick()
-                else->Unit
+        onAction = { action ->
+            when (action) {
+                is ChatDetailAction.OnChatMembersClick -> onChatMembersClick()
+                else -> Unit
             }
             viewModel.onAction(action)
         }
@@ -113,39 +117,45 @@ fun ChatDetailScreen(
     val configuration = currentDeviceConfigure()
     val messageListState = rememberLazyListState()
 
-        Scaffold(
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        snackbarHost = {
+            SnackbarHost(snackbarState)
+        },
+        contentWindowInsets = WindowInsets.safeDrawing,
+        contentColor = if (!configuration.isWideScreen) {
+            MaterialTheme.colorScheme.surface
+        } else MaterialTheme.colorScheme.extended.surfaceLower
+    ) { innerPadding ->
+        Box(
             modifier = Modifier
-                .fillMaxSize(),
-            snackbarHost = {
-                SnackbarHost(snackbarState)
-            },
-            contentWindowInsets = WindowInsets.safeDrawing,
-            contentColor = if (!configuration.isWideScreen) {
-                MaterialTheme.colorScheme.surface
-            } else MaterialTheme.colorScheme.extended.surfaceLower
-        )
-        { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .clearFocusOnTap()
-                    .padding(innerPadding)
-                    .then(
-                        if (configuration.isWideScreen) {
-                            Modifier.padding(horizontal = 8.dp)
-                        } else Modifier
-                    )
+                .clearFocusOnTap()
+                .padding(innerPadding)
+                .then(
+                    if (configuration.isWideScreen) {
+                        Modifier.padding(horizontal = 8.dp)
+                    } else Modifier
+                )
 
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                DynamicRoundedCornerColumn(
+                    isCornersRounded = configuration.isWideScreen,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
                 ) {
-                    DynamicRoundedCornerColumn(
-                        isCornersRounded = configuration.isWideScreen,
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                    )
-                    {
+
+                    if (state.chatUi == null) {
+                        EmptySection(
+                            title = stringResource(Res.string.no_chat_selected),
+                            description = stringResource(Res.string.select_a_chat),
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
                         ChatHeader {
                             ChatDetailHeader(
                                 chatUi = state.chatUi,
@@ -190,7 +200,7 @@ fun ChatDetailScreen(
 
                         )
                         AnimatedVisibility(
-                            visible = !configuration.isWideScreen && state.chatUi != null
+                            visible = !configuration.isWideScreen
                         ) {
                             MessageBox(
                                 messageTextFieldState = state.messageTextFieldState,
@@ -208,34 +218,34 @@ fun ChatDetailScreen(
                             )
                         }
 
-
-                    }
-                    if (configuration.isWideScreen) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-                    AnimatedVisibility(
-                        visible = configuration.isWideScreen && state.chatUi != null
-                    ) {
-                        DynamicRoundedCornerColumn(
-                            isCornersRounded = configuration.isWideScreen
-                        ) {
-                            MessageBox(
-                                messageTextFieldState = state.messageTextFieldState,
-                                isTextInputEnabled = state.canSendMessage,
-                                connectionState = state.connectionState,
-                                onSendClick = {
-                                    onAction(ChatDetailAction.OnSendMessageClick)
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp)
-                            )
+                        if (configuration.isWideScreen) {
+                            Spacer(modifier = Modifier.height(8.dp))
                         }
+                        AnimatedVisibility(
+                            visible = configuration.isWideScreen && state.chatUi != null
+                        ) {
+                            DynamicRoundedCornerColumn(
+                                isCornersRounded = configuration.isWideScreen
+                            ) {
+                                MessageBox(
+                                    messageTextFieldState = state.messageTextFieldState,
+                                    isTextInputEnabled = state.canSendMessage,
+                                    connectionState = state.connectionState,
+                                    onSendClick = {
+                                        onAction(ChatDetailAction.OnSendMessageClick)
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                )
+                            }
 
+                        }
                     }
                 }
             }
         }
+    }
 
 
 }
