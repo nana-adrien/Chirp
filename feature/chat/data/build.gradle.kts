@@ -41,7 +41,7 @@ kotlin {
         compilations.getByName("main"){
             cinterops{
                 create("network"){
-                    defFile(file("src/nativeInterop/cinterop"))
+                    defFile(file("src/nativeInterop/cinterop/network.def"))
                 }
             }
         }
