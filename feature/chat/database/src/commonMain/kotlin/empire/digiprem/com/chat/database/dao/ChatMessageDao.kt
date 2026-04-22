@@ -28,4 +28,12 @@ interface ChatMessageDao {
 
     @Query("SELECT * FROM chatmessageentity WHERE messageId= :messageId")
     suspend fun getMessageById(messageId:String):ChatMessageEntity?
+
+    @Query(
+        """
+            UPDATE chatmessageentity    
+            SET deliveryStatus= :status, deliveryStatusTimestamp= :timestamp
+        """
+    )
+    suspend fun updateDeliveryStatus(messageId:String,status:String,timestamp:Long)
 }

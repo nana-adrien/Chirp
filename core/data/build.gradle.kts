@@ -15,6 +15,9 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.datastore)
                 implementation(libs.datastore.preferences)
+
+                implementation(libs.androidx.room.runtime)
+                implementation(libs.sqlite.bundled)
             }
         }
 
