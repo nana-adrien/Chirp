@@ -1,13 +1,34 @@
 package empire.digiprem.com.chat.presentation.chat_list_detail
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import empire.digiprem.com.chat.domain.chat.ChatConnectionClient
+import empire.digiprem.com.chat.presentation.chat_detail.ChatDetailState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
-class ChatListDetailViewModel:ViewModel() {
+class ChatListDetailViewModel(
+    private val connectionClient: ChatConnectionClient
+):ViewModel() {
+
+    private var hasLoadedInitialData = false
     private val _state= MutableStateFlow(ChatListDetailState())
-    val state=_state.asStateFlow()
+    val state=_state
+        .onStart {
+            if (!hasLoadedInitialData) {
+                connectionClient.chatMessage.launchIn(viewModelScope)
+                hasLoadedInitialData = true
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = ChatListDetailState()
+        )
 
     fun onAction(action:ChatListDetailAction){
         when(action){

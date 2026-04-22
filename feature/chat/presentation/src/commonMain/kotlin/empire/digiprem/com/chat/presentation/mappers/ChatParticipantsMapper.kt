@@ -1,5 +1,6 @@
 package empire.digiprem.com.chat.presentation.mappers
 
+import empire.digiprem.com.chat.domain.models.ChatMessage
 import empire.digiprem.com.chat.domain.models.ChatParticipant
 import empire.digiprem.com.core.designsystem.components.avatar.ChatParticipantUI
 import empire.digiprem.com.core.domain.auth.User
