@@ -1,6 +1,8 @@
 package empire.digiprem.com.chat.data.mapper
 
 import empire.digiprem.com.chat.data.dto.ChatMessageDto
+import empire.digiprem.com.chat.data.dto.websocket.InComingWebSocketDto
+import empire.digiprem.com.chat.data.dto.websocket.IncomingWebSocketType
 import empire.digiprem.com.chat.data.dto.websocket.OutgoingWebSocketDto
 import empire.digiprem.com.chat.database.entites.ChatMessageEntity
 import empire.digiprem.com.chat.database.view.LastMessageView
@@ -77,5 +79,16 @@ fun ChatMessage.toNewMessage(): OutgoingWebSocketDto.NewMessage {
         messageId = id,
         chatId = chatId,
         content = content,
+    )
+}
+
+fun InComingWebSocketDto.NewMessageDto.toEntity():ChatMessageEntity{
+    return ChatMessageEntity(
+        messageId = id,
+        chatId = chatId,
+        senderId=senderId,
+        content=content,
+        timestamp = Instant.parse(createdAt).toEpochMilliseconds(),
+        deliveryStatus = ChatMessageDeliveryStatus.SENT.name
     )
 }
