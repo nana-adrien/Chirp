@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,7 +37,6 @@ import chirp.feature.chat.presentation.generated.resources.no_chats
 import chirp.feature.chat.presentation.generated.resources.no_chats_subtitle
 import empire.digiprem.com.chat.presentation.chat_list.components.ChatListHeader
 import empire.digiprem.com.chat.presentation.components.EmptySection
-import empire.digiprem.com.chat.presentation.models.ChatUi
 import empire.digiprem.com.core.designsystem.components.buttons.ChirpFloatingActionButton
 import empire.digiprem.com.core.designsystem.components.dialogs.DestructionConfirmationDialog
 import empire.digiprem.com.core.designsystem.theme.ChirpTheme
@@ -47,7 +47,8 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ChatListRoot(
-    onChatClick:(chat:ChatUi)->Unit,
+    selectedChatId:String?,
+    onChatClick:(String?)->Unit,
     onConfirmLogoutClick:()->Unit,
     onCreateChatClick:()->Unit,
     onProfileSettingsClick:()->Unit,
@@ -56,12 +57,16 @@ fun ChatListRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val onAction = viewModel::onAction
     val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(selectedChatId){
+        viewModel.onAction(ChatListAction.OnSelectClick(selectedChatId))
+    }
     ChatListScreen(
         state = state,
         snackbarHostState = snackbarHostState,
         onAction = {action->
             when(action){
-                is ChatListAction.OnChatClick -> onChatClick(action.chat)
+                is ChatListAction.OnSelectClick -> onChatClick(action.chatId)
                 ChatListAction.OnConfirmLogout -> onConfirmLogoutClick()
                 ChatListAction.OnCreateChatClick -> onCreateChatClick()
                 ChatListAction.OnProfileSettingsClick -> onProfileSettingsClick()
@@ -150,7 +155,7 @@ fun ChatListScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
-                                        onAction(ChatListAction.OnChatClick(chat= chatUi))
+                                        onAction(ChatListAction.OnSelectClick(chatUi.id))
                                     }
                             )
 
@@ -159,7 +164,6 @@ fun ChatListScreen(
                 }
             }
         }
-
     }
 
     if (state.showLogoutConfirmation){

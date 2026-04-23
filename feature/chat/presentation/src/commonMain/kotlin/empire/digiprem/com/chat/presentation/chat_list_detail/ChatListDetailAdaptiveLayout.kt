@@ -44,6 +44,7 @@ fun ChatListDetailAdaptiveLayout(
     BackHandler(enabled = scaffoldNavigator.canNavigateBack()) {
         scope.launch {
             scaffoldNavigator.navigateBack()
+            chatListDetailViewModel.onAction(ChatListDetailAction.OnSelecteChat(null))
         }
     }
 
@@ -51,7 +52,7 @@ fun ChatListDetailAdaptiveLayout(
 
     LaunchedEffect(detailPane,sharedState.selectedChatId){
         if (detailPane== PaneAdaptedValue.Hidden && sharedState.selectedChatId!=null){
-            chatListDetailViewModel.onAction(ChatListDetailAction.OnChatClick(null))
+            chatListDetailViewModel.onAction(ChatListDetailAction.OnSelecteChat(null))
         }
     }
     ListDetailPaneScaffold(
@@ -62,9 +63,10 @@ fun ChatListDetailAdaptiveLayout(
         listPane = {
             AnimatedPane {
                 ChatListRoot(
-                    onChatClick = { chatUi ->
+                    selectedChatId =sharedState.selectedChatId ,
+                    onChatClick = { chatId ->
                         chatListDetailViewModel.onAction(
-                            ChatListDetailAction.OnChatClick(chatId = chatUi.id)
+                            ChatListDetailAction.OnSelecteChat(chatId = chatId)
                         )
                         scope.launch {
                             scaffoldNavigator.navigateTo(

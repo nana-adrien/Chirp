@@ -15,8 +15,8 @@
     <string name="failed">Failed</string>
     <string name="save">Save</string>
 
-    <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
+    <string name="today">Today, %1$s</string>
+    <string name="yesterday">Yesterday, %1$s</string>
 
 
     <string name="delete_for_everyone">Delete for everyone</string>

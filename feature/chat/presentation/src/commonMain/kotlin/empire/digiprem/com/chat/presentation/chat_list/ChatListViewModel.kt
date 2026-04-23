@@ -3,9 +3,6 @@ package empire.digiprem.com.chat.presentation.chat_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import empire.digiprem.com.chat.domain.chat.ChatRepository
-import empire.digiprem.com.chat.presentation.chat_list.ChatListAction
-import empire.digiprem.com.chat.presentation.chat_list.ChatListEvent
-import empire.digiprem.com.chat.presentation.chat_list.ChatListState
 import empire.digiprem.com.chat.presentation.mappers.toUi
 import empire.digiprem.com.chat.presentation.models.toUi
 import empire.digiprem.com.core.domain.auth.SessionStorage
@@ -57,10 +54,10 @@ class ChatListViewModel(
 
     fun onAction(action: ChatListAction) {
         when (action) {
-            is ChatListAction.OnChatClick->{
+            is ChatListAction.OnSelectClick->{
                 _state.update {
                     it.copy(
-                        selectedChatId = action.chat.id
+                        selectedChatId = action.chatId
                     )
                 }
             }
