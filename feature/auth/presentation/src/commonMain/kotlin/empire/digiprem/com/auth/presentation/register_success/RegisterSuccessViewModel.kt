@@ -44,9 +44,7 @@ class RegisterSuccessViewModel(
         when (event) {
             is RegisterSuccessAction.OnResendVerificationEmailClick->resendVerification()
             is RegisterSuccessAction.OnLoginClick ->Unit
-            else -> {
 
-            }
         }
     }
 

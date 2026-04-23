@@ -10,11 +10,11 @@ import empire.digiprem.com.chat.data.network.KtorWebSocketConnector
 import empire.digiprem.com.chat.database.ChirpChatDatabase
 import empire.digiprem.com.chat.domain.chat.ChatConnectionClient
 import empire.digiprem.com.chat.domain.chat.ChatRepository
-import empire.digiprem.com.chat.domain.error.ConnectionError
 import empire.digiprem.com.chat.domain.message.MessageRepository
 import empire.digiprem.com.chat.domain.models.ChatMessage
 import empire.digiprem.com.chat.domain.models.ChatMessageDeliveryStatus
 import empire.digiprem.com.core.domain.auth.SessionStorage
+import empire.digiprem.com.core.domain.util.DataError
 import empire.digiprem.com.core.domain.util.EmptyResult
 import empire.digiprem.com.core.domain.util.onFailure
 import kotlinx.coroutines.CoroutineScope
@@ -53,7 +53,7 @@ class WebSocketChatConnectionClient(
 
     override val connectionState= webSocketConnector.connectionState
 
-    override suspend fun sendChatMessage(message: ChatMessage): EmptyResult<ConnectionError> {
+   /* override suspend fun sendChatMessage(message: ChatMessage): EmptyResult<DataError.Connection> {
         val outgoingDto=message.toNewMessage()
         val webSocketMessage= WebSocketMessageDto(
             type = outgoingDto.type.name,
@@ -69,7 +69,7 @@ class WebSocketChatConnectionClient(
                 )
             }
     }
-
+*/
     private fun parseInComingMessage(message:WebSocketMessageDto):InComingWebSocketDto?{
         return try {
             when(val type=IncomingWebSocketType.valueOf(message.type) ){

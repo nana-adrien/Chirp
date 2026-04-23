@@ -4,11 +4,11 @@ package empire.digiprem.com.chat.data.network
 
 import empire.digiprem.com.chat.data.dto.websocket.WebSocketMessageDto
 import empire.digiprem.com.chat.data.lifecycle.AppLifecycleObserver
-import empire.digiprem.com.chat.domain.error.ConnectionError
 import empire.digiprem.com.chat.domain.models.ConnectionState
 import empire.digiprem.com.core.data.networking.UrlConstants
 import empire.digiprem.com.core.domain.auth.SessionStorage
 import empire.digiprem.com.core.domain.logging.ChirpLogger
+import empire.digiprem.com.core.domain.util.DataError
 import empire.digiprem.com.core.domain.util.EmptyResult
 import empire.digiprem.com.core.domain.util.Result
 import empire.digiprem.com.feature.chat.data.BuildKonfig
@@ -209,10 +209,10 @@ class KtorWebSocketConnector(
     }
 
 
-   suspend fun sendMessage(message:String):EmptyResult<ConnectionError>{
+   suspend fun sendMessage(message:String):EmptyResult<DataError.Connection>{
         val  connectionState=connectionState.value
         if (currentSession == null || connectionState !=ConnectionState.CONNECTED){
-            return Result.Failure(ConnectionError.NOT_CONNECTED)
+            return Result.Failure(DataError.Connection.NOT_CONNECTED)
         }
         return  try {
             currentSession?.send(message)
@@ -220,7 +220,7 @@ class KtorWebSocketConnector(
         } catch (e:Exception){
             coroutineContext.ensureActive()
             logger.error("Unable to send WebSocket message",e)
-            Result.Failure(ConnectionError.MESSAGE_SEND_FAILED)
+            Result.Failure(DataError.Connection.MESSAGE_SEND_FAILED)
         }
     }
 

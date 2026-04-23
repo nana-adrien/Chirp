@@ -151,14 +151,14 @@ fun ChatDetailScreen(
                         .weight(1f)
                         .fillMaxWidth()
                 ) {
-
                     if (state.chatUi == null) {
                         EmptySection(
                             title = stringResource(Res.string.no_chat_selected),
                             description = stringResource(Res.string.select_a_chat),
                             modifier = Modifier.fillMaxSize()
                         )
-                    } else {
+                    }
+                    else {
                         ChatHeader {
                             ChatDetailHeader(
                                 chatUi = state.chatUi,
@@ -207,7 +207,7 @@ fun ChatDetailScreen(
                         ) {
                             MessageBox(
                                 messageTextFieldState = state.messageTextFieldState,
-                                isTextInputEnabled = state.canSendMessage,
+                                isSendButtonEnabled =true ,// state.canSendMessage,
                                 connectionState = state.connectionState,
                                 onSendClick = {
                                     onAction(ChatDetailAction.OnSendMessageClick)
@@ -221,30 +221,30 @@ fun ChatDetailScreen(
                             )
                         }
 
-                        if (configuration.isWideScreen) {
-                            Spacer(modifier = Modifier.height(8.dp))
-                        }
-                        AnimatedVisibility(
-                            visible = configuration.isWideScreen && state.chatUi != null
-                        ) {
-                            DynamicRoundedCornerColumn(
-                                isCornersRounded = configuration.isWideScreen
-                            ) {
-                                MessageBox(
-                                    messageTextFieldState = state.messageTextFieldState,
-                                    isTextInputEnabled = state.canSendMessage,
-                                    connectionState = state.connectionState,
-                                    onSendClick = {
-                                        onAction(ChatDetailAction.OnSendMessageClick)
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                )
-                            }
-
-                        }
                     }
+                }
+                if (configuration.isWideScreen) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                AnimatedVisibility(
+                    visible = configuration.isWideScreen && state.chatUi != null
+                ) {
+                    DynamicRoundedCornerColumn(
+                        isCornersRounded = configuration.isWideScreen
+                    ) {
+                        MessageBox(
+                            messageTextFieldState = state.messageTextFieldState,
+                            isSendButtonEnabled = state.canSendMessage,
+                            connectionState = state.connectionState,
+                            onSendClick = {
+                                onAction(ChatDetailAction.OnSendMessageClick)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        )
+                    }
+
                 }
             }
         }

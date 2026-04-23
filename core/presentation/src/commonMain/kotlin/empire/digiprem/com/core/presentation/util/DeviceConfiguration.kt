@@ -31,7 +31,7 @@ enum class DeviceConfiguration {
 
             return with(windowSizeClass) {
                 val smallestSideDp = min(minWidthDp, minHeightDp)
-                val isTablet = smallestSideDp >= WIDTH_DP_MEDIUM_LOWER_BOUND
+                val isTablet = smallestSideDp < WIDTH_DP_MEDIUM_LOWER_BOUND
                 val isLandscape = minWidthDp > minHeightDp
                 when {
                     !isTablet && !isLandscape -> MOBILE_PORTRAIT

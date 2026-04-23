@@ -13,6 +13,7 @@ import chirp.core.presentation.generated.resources.error_serialization
 import chirp.core.presentation.generated.resources.error_server
 import chirp.core.presentation.generated.resources.error_service_unavailable
 import chirp.core.presentation.generated.resources.error_too_many_request
+import chirp.core.presentation.generated.resources.error_unable_to_send_message
 import chirp.core.presentation.generated.resources.error_unauthorized
 import chirp.core.presentation.generated.resources.error_unknown
 import empire.digiprem.com.core.domain.util.DataError
@@ -36,7 +37,9 @@ fun DataError.toUiText(): UiText {
         DataError.Remote.SERVER_UNAVAILABLE -> Res.string.error_service_unavailable
         DataError.Remote.SERIALIZATION -> Res.string.error_serialization
         DataError.Remote.UNKNOWN -> Res.string.error_unknown
-    }
+        DataError.Connection.NOT_CONNECTED ->Res.string.error_not_internet
+        DataError.Connection.MESSAGE_SEND_FAILED -> Res.string.error_unable_to_send_message
+  }
 
       return UiText.Resource(ressource)
 }

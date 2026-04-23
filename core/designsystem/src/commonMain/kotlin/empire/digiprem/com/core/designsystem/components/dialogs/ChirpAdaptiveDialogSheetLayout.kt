@@ -10,6 +10,7 @@ fun ChirpAdaptiveDialogSheetLayout(
 ) {
     val configuration= currentDeviceConfigure()
 
+    println("configuration=$configuration")
     if (configuration.isMobile){
         ChirpBottomSheet(
             onDismiss=onDismiss,

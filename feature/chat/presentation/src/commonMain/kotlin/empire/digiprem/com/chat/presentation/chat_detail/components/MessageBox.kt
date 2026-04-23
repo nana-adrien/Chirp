@@ -30,7 +30,7 @@ import org.jetbrains.compose.resources.vectorResource
 @Composable
 fun MessageBox(
     messageTextFieldState: TextFieldState,
-    isTextInputEnabled: Boolean,
+    isSendButtonEnabled: Boolean,
     connectionState: ConnectionState,
     onSendClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -41,7 +41,7 @@ fun MessageBox(
         modifier = modifier
             .padding(4.dp),
         placeholder = stringResource(Res.string.send_a_message),
-        enabled = isTextInputEnabled,
+     //   enabled = isSendButtonEnabled,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
         onKeyboardActions = onSendClick,
         bottomContent = {
@@ -67,7 +67,7 @@ fun MessageBox(
             ChirpButton(
                 text = stringResource(Res.string.send),
                 onClick = onSendClick,
-                enabled = isConnected && isTextInputEnabled
+                enabled = isConnected && isSendButtonEnabled
             )
         }
     )

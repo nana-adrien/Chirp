@@ -8,6 +8,8 @@ import empire.digiprem.com.chat.database.entites.ChatMessageEntity
 import empire.digiprem.com.chat.database.view.LastMessageView
 import empire.digiprem.com.chat.domain.models.ChatMessage
 import empire.digiprem.com.chat.domain.models.ChatMessageDeliveryStatus
+import empire.digiprem.com.chat.domain.models.OutgoingNewMessage
+import kotlin.time.Clock
 import kotlin.time.Instant
 
 fun ChatMessageDto.toDomain(): ChatMessage {
@@ -70,6 +72,7 @@ fun ChatMessage.toEntity(): ChatMessageEntity {
         chatId = chatId,
         content = content,
         senderId = senderId,
+
         timestamp = createAt.toEpochMilliseconds(),
         deliveryStatus = deliveryStatus.name
     )
@@ -90,5 +93,27 @@ fun InComingWebSocketDto.NewMessageDto.toEntity():ChatMessageEntity{
         content=content,
         timestamp = Instant.parse(createdAt).toEpochMilliseconds(),
         deliveryStatus = ChatMessageDeliveryStatus.SENT.name
+    )
+}
+
+fun OutgoingNewMessage.toWebSocketDto():OutgoingWebSocketDto.NewMessage{
+    return  OutgoingWebSocketDto.NewMessage(
+        messageId = messageId,
+        chatId = chatId,
+        content = content,
+    )
+}
+
+fun OutgoingWebSocketDto.NewMessage.toEntity(
+    senderId:String,
+    deliveryStatus:ChatMessageDeliveryStatus
+):ChatMessageEntity{
+    return  ChatMessageEntity(
+        messageId = messageId,
+        chatId = chatId,
+        content=content,
+        senderId=senderId,
+        timestamp = Clock.System.now().toEpochMilliseconds(),
+        deliveryStatus =deliveryStatus.name
     )
 }
